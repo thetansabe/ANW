@@ -1,0 +1,39 @@
+.cover-image{
+    min-height: 100%;
+    min-width: 100%;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: -1;
+}
+.avatar-container{
+    position: relative;
+    width: 140px;
+    height:170px;
+    display:block;
+    margin:auto;
+    overflow: hidden;
+}
+.avatar{
+    position: absolute;
+    height: auto;
+    max-width: 145px;
+    max-height: 180px;
+    min-width: 62px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.avatar-container .btn{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8em;
+}
+
+.avatar-container img{
+    transition-duration: 0.2s;
+}
+.avatar-container:hover img{
+    transform: translateX(-50%) scale(1.03);
+}

@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row">
+      <div class="col s12 center-align cover-title z-depth-1">
+        {{ lang.ui.editbanner }}
+      </div>
+      <br>
+      <div class="col s12">
+        <form (submit)="save()">
+          <div class="col s12">
+              <div class="s12 center-align" *ngIf="currentSlide">
+                <img [src]="getUrl(currentSlide.Path)" style="max-height: 300px; max-width: 720px;">
+              </div>
+              <div class="input-field col s10" *ngIf="currentSlide">
+                  <input [readonly]='isLoading' id="slider-title" type="text" [(ngModel)]="currentSlide.Title" name="title" class="validate">
+                  <label class="active" for="slider-title">{{ lang.ui.title }}</label>
+                </div>
+                <div class="input-field col s10" *ngIf="currentSlide">
+                  <textarea [readonly]='isLoading' id="slider-desc" [(ngModel)]="currentSlide.Desc" name="desc" class="materialize-textarea"></textarea>
+                  <label  class="active" for="slider-desc">{{ lang.ui.description }}</label>
+                </div>
+                <div class="input-field col s10" *ngIf="currentSlide">
+                  <input [readonly]='isLoading' id="slider-href" type="text" [(ngModel)]="currentSlide.Goto" name="url" class="validate">
+                  <label  class="active" for="slider-title">{{ lang.ui.href }}</label>
+                </div>
+                <div class="col s6  " *ngIf="alignment && currentSlide"  >
+                  <br>
+                    <select [(ngModel)]="currentSlide.Alignment" name="align" [materialize-select]="currentSlide.Alignment">
+                      <option *ngFor="let type of alignment; let i=index" value="{{ type }}">{{ alignmentText[i] }}</option>
+                    </select>
+                    <label>{{ lang.ui.alignment }}</label>
+                </div>
+                <div class="col s12">
+                  <br>
+                  <div class="col s6 input-field">
+                    <input #validFrom type="text" id="valid-from" [placeholder]="lang.ui.pickaday" class="datepicker" materialize-datepicker datepicker-format="dd/mm/yyyy" [datepicker-default]="now" [datepicker-localization]="i18n">
+                    <label class="active" for="valid-from">{{ lang.ui.validfrom }}</label>
+                  </div>
+                  <div class="col s6 input-field">
+                    <input #validTo type="text" id="valid-to" [placeholder]="lang.ui.pickaday" class="datepicker" materialize-datepicker datepicker-format="dd/mm/yyyy" [datepicker-default]="now" [datepicker-localization]="i18n">
+                    <label  class="active" for="valid-to">{{ lang.ui.validto }}</label>
+                  </div>
+                </div>
+          </div>
+          <div class="col s12 right-align">
+              <div class="progress blue lighten-5" *ngIf="isLoading">
+                  <div class="indeterminate blue"></div>
+              </div>
+            <button [disabled]="isLoading || (currentSlide && !compareDate())" type="submit" class="btn btn-rounded green waves-effect">
+              <i class="material-icons left">done</i>
+              {{ lang.ui.save }}
+            </button>
+            <a class="btn-rounded btn grey" routerLink="..">
+              {{ lang.ui.back }}
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

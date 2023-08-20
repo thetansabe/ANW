@@ -1,0 +1,28 @@
+
+<ul id="sidenav-admin" class="sidenav sidenav-fixed">
+  <li>
+    <div class="user-view">
+    </div>
+  </li>
+  <li *ngFor="let item of itemList" class="waves-effect waves-block waves-light" [routerLinkActive]="'active'">
+    <a  [routerLink]="item.route"><i class="material-icons left">{{ item.icon }}</i>
+      <span>
+        {{ item.title }}
+      </span>
+    </a>
+  </li>
+  <li><a data-target="return-to-home" class="link modal-trigger"><i class="material-icons left">home</i>
+    <span>
+      {{ lang.ui.returntohome }}
+    </span>
+  </a></li>
+</ul>
+
+<div id="return-to-home" class="modal" [materialize-modal]="true">
+  <div class="modal-content center-align">
+    <h5>{{ lang.ui.prompt_returnhome }}</h5>
+    <br>
+    <a class="btn btn-rounded green" routerLink="/">{{ lang.ui.yes }}</a>
+    <a class="btn btn-rounded grey modal-close">{{ lang.ui.cancel }}</a>
+  </div>  
+</div>

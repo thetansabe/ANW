@@ -1,0 +1,48 @@
+<div class="modal modal-fixed-footer" [materialize-modal]="true" *mobxAutorun>
+  <div class="modal-content row">
+    <div class="col s12 center-align">
+      <h5 *ngIf="selectedSong">{{ selectedSong.Name }}</h5>
+      <br>
+    </div>
+    <div class="col s12">
+      <form (submit)="submit()">
+        <div class="input-field col s12">
+          <input id="songName" [(ngModel)]="songName" name="songName" type="text"
+            [class.valid]="songName" [class.invalid]="!songName"
+            >
+          <label for="songName" [class.active]="songName">{{ lang.ui.songname }}</label>
+          <span class="helper-text red-text" 
+            *ngIf="songName && songName.length==0 ">{{ lang.ui.songnameisempty }}</span>
+        </div>
+        <div class="input-field col s12">
+          <div class="chips" [materialize-chips]="'+ '+lang.ui.artist"></div>
+        </div>
+        <div class="input-field col s10">
+          <label>
+              <input type="checkbox" class="filled-in" name="mysong" [(ngModel)]="mysong" />
+              <span>{{ lang.ui.mysong }}</span>
+            </label>
+            <br><br>
+        </div>
+        <div class="col s12" [hidden]="!songTypes">
+          <br>
+            <select *ngIf="songTypes && songTypes.length>0 && songType" name="songType" [(ngModel)]="songType" [materialize-select]="songType || songTypes[0].SubType[0].Id">
+                <optgroup *ngFor="let item of songTypes" label="{{ item.Text }}">
+                    <option *ngFor="let type of item.SubType" [value]="type.Id" [selected]="songType==type.Id">{{ type.Text }}</option>
+                </optgroup>
+              </select>
+              <label>{{ lang.ui.songtype }}</label>
+        </div>
+        <div class="input-field col s12 center-align">
+          <button type="submit" class="btn btn-large btn-rounded green" [disabled]="!songName || isLoading">
+            <i class="material-icons left">done</i>
+            {{ lang.ui.save }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <a class="modal-close waves-effect waves-green btn-flat">{{ lang.ui.cancel }}</a>
+    </div>
+</div>

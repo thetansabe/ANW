@@ -1,0 +1,71 @@
+<div [@transition]>
+  <br>
+  <div id="song-uploader" class="row white container">
+    <div class="col s12">
+      <a class="btn grey btn-rounded" routerLink=".."><i class="material-icons left">arrow_back_ios</i>{{ lang.ui.back }}</a>
+    </div>
+    <div class="col s12">
+      <h5>{{ lang.ui.uploadsong }}</h5>
+      <br>
+    </div>
+    <div class="col s12" *mobxAutorun>
+      <div class="col s1">
+      </div>
+      <form [formGroup]="form" class="col s11" (submit)="upload()">
+          <div class="file-field input-field">
+              <div class="btn btn-rounded waves-effect btn-large" [ngClass]="{'red pulse': (form.get('file').invalid && !form.pristine) || (uploadFile && !uploadFile.type.includes('audio/')),'green': form.pristine || (form.get('file').valid && uploadFile && uploadFile.type.includes('audio/'))}">
+                <span><i class="material-icons left">search</i>{{ lang.ui.browse }}</span>
+                <input type="file" accept="audio/*" formControlName="file" (change)="setFile($event)">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path" type="text" readonly>
+              </div>
+            </div>
+          <div class="input-field col s10">
+            <input [readonly]='isUploading' id="songname" type="text" formControlName="songname" class="validate" required>
+            <label for="songname">{{ lang.ui.songname }}</label>
+            <span class="helper-text red-text" *ngIf="form.get('songname').invalid && !form.pristine">{{ lang.ui.songnameisempty }}</span>
+          </div>
+          <div class="input-field col s8">
+            <div class="chips" [materialize-chips]="'+ '+lang.ui.artist"></div>
+          </div>
+          <div class="input-field col s8">
+            <label>
+                <input type="checkbox" class="filled-in" formControlName="mysong"  />
+                <span>{{ lang.ui.mysong }}</span>
+              </label>
+              <br><br>
+          </div>
+          <div class="col s12" [hidden]="!songTypes">
+            <br>
+              <select *ngIf="songTypes && songTypes.length>0" formControlName="songtype" [materialize-select]="songTypes[0].SubType[0].Id">
+                  <optgroup *ngFor="let item of songTypes" label="{{ item.Text }}">
+                      <option *ngFor="let type of item.SubType" value="{{ type.Id }}">{{ type.Text }}</option>
+                  </optgroup>
+                </select>
+                <label>{{ lang.ui.songtype }}</label>
+          </div>
+          <div class="col s12 center-align">
+            <br>
+            <button [disabled]="isUploading || form.invalid || (uploadFile && !uploadFile.type.includes('audio/'))" type="submit" class="btn btn-rounded waves-effect waves-light btn-large bg-green-to-light">
+                <div class="left btn-loader" *ngIf="isUploading">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-green-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <i class="material-icons left" *ngIf="!isUploading">publish</i>{{ isUploading?lang.ui.requesting:lang.ui.upload }}
+            </button>
+            <br>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

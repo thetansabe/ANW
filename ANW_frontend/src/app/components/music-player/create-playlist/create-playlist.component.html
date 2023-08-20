@@ -1,0 +1,26 @@
+<div id="create-playlist-modal" class="modal" materialize-modal>
+  <div class="modal-content">
+    <form (submit)="submit()">
+      <div class="row">
+        <div class="col s12 center-align">
+          <h4>{{ lang.ui.create_playlist }}</h4>
+        </div>
+        <div class="input-field col s11">
+          <input id="playlist-name" name="playlist-name" [(ngModel)]="playlistName" type="text" class="validate">
+          <label for="playlist-name">{{ lang.ui.playlist_title }}</label>
+        </div>
+        <div class="input-field col s11">
+            <select [materialize-select]="publicMode" [(ngModel)]="publicMode" name="playlist-public-mode">
+              <option value="1">{{ lang.ui.public }}</option>
+              <option value="0">{{ lang.ui.private }}</option>
+            </select>
+            <label>{{ lang.ui.public_mode }}</label>
+        </div>
+        <div class="col s11 center-align">
+          <button class="btn btn-rounded green" [disabled]="isRequesting || !playlistName" type="submit">{{ lang.ui.create }}</button>
+          <a class="btn btn-rounded gray modal-close">{{ lang.ui.cancel }}</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

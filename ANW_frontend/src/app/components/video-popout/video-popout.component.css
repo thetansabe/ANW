@@ -1,0 +1,41 @@
+.video-container{
+    max-width: 700px;
+    max-height: 512px;
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%,-40%);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1400;
+    transition: 0.3s ease-in-out all;
+}
+.video{
+    max-width: 700px;
+    height: 450px;
+    max-height: 512px;
+}
+.video-container.show{
+    opacity: 1;
+    visibility: visible;
+    transition: 0.3s ease-in-out all;
+}
+.video-container + div.shader{
+    top:0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1390;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #000;
+}
+.video-container.show + div.shader{
+    opacity: 0.4;
+    visibility: visible;
+}
+.video-title{
+    font-weight: bold;
+    text-shadow: 1px 0px white, 0px 1px white, -1px 0px white, 0px -1px white;
+}

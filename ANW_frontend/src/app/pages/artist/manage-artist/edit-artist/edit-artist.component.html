@@ -1,0 +1,63 @@
+<div class="modal modal-fixed-footer" [materialize-modal]="true">
+  <div class="modal-content" *mobxAutorun>
+    <form (submit)="save()">
+      <div class="row" *ngIf="selectedArtist">
+        <div class="row center-align">
+          <h5>{{ selectedArtist.Name }}</h5>
+        </div>
+        <div class="row">
+          <div class="col s6 center-align">
+            <h6>{{ lang.ui.avatarimg }}</h6>
+            <div class="preview-image" *ngIf="selectedArtist.AvatarImg">
+              <img [r-img]="url + selectedArtist.AvatarImg">
+            </div>
+          </div>
+          <div class="col s6">
+            <div class="file-field input-field">
+              <div class="btn green btn-rounded">
+                <span>{{ lang.ui.upload }}</span>
+                <input type="file" (change)="uploadAvatar($event)" accept="image/*">
+              </div>
+              <div class="file-path-wrapper" style="visibility: hidden">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+          </div>
+       </div>
+        <div class="row">
+          <div class="col s6 center-align">
+            <h6>{{ lang.ui.backgroundimg }}</h6>
+            <div class="preview-image" *ngIf="selectedArtist.BackgroundImg">
+              <img [r-img]="url + selectedArtist.BackgroundImg">
+            </div>
+          </div>
+          <div class="col s6">
+            <div class="file-field input-field">
+              <div class="btn  green btn-rounded">
+                <span>{{ lang.ui.upload }}</span>
+                <input type="file" (change)="uploadBackground($event)"  accept="image/*">
+              </div>
+              <div class="file-path-wrapper" style="visibility: hidden">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s11 m10 l7 xl6">
+            <select *ngIf="nations && nations.length>0 && nation!=null" [(ngModel)]="nation" name="artist-country" [materialize-select]="nation">
+              <option *ngFor="let n of nations" [value]="n.Id">{{ n.Name }}</option>
+            </select>
+            <label>{{ lang.ui.country }}</label>
+          </div>
+          <div class="col s12 center-align">
+            <button type="submit" class="btn btn-rounded green waves-effect" [disabled]="isLoading || !selectedArtist">{{ lang.ui.save }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-close waves-effect waves-green btn-flat">{{ lang.ui.cancel }}</a>
+  </div>
+</div>

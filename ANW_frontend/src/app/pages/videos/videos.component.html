@@ -1,0 +1,16 @@
+<div class="container" *mobxAutorun>
+  <div class="row">
+    <br>
+    <div class="video-box" *ngFor="let item of list" [routerLink]="['detail/'+item.Id]">
+      <div class="video-box-thumbnail">
+        <img [r-img]="getImageUrl(item.Thumbnail)">
+        <div class="overlay">
+          <i class="material-icons center-component white-text medium">play_circle_outline</i>
+        </div>
+      </div>
+      <div class="video-box-content">
+        <h6 [innerHTML]="item.Name"></h6>
+      </div>
+    </div>
+  </div>
+</div>

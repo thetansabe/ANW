@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12 center-align">
+      <h5>{{ lang.ui.banneradsmanage }}</h5>
+    </div>
+    <div class="col s12 right-align">
+      <br>
+      <a class="btn btn-large btn-rounded bg-green-to-light waves-effect" routerLink="upload">{{ lang.ui.upload }}</a>
+    </div>
+    <div class="col s12" *mobxAutorun>
+      <br>
+        <table *ngIf="slideList" [@transition]>
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th class="hide-on-small-and-down">{{ lang.ui.title }}</th>
+                  <th>{{ lang.ui.validfrom }}</th>
+                  <th>{{ lang.ui.validto }}</th>
+                  <th>{{ lang.ui.action }}</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              <tr *ngFor="let item of slideOffset" [ngClass]="{'red lighten-2': isExpired(item)}">
+                <td><img class="preview-image" [src]="getUrl(item.Path)"></td>
+                <td class="hide-on-small-and-down">{{ item.Title }}</td>
+                <td>{{ item.ValidFrom | date:'dd/MM/yyyy' }}</td>
+                <td>{{ item.ValidTo | date:'dd/MM/yyyy' }}</td>
+                <td>
+                  <a class="btn-floating amber waves-effect" [routerLink]="['edit']" [queryParams]="{ id: item.Id }"><i class="material-icons">edit</i></a>
+                  <a class="btn-floating red waves-effect modal-trigger" data-target="slider-delete-prompt" (click)="setSlider(item)"><i class="material-icons">delete</i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <div class="col s12 center-align"  *mobxAutorun>
+      <ul class="pagination" *ngIf="maxPage>=2">
+        <li [class.disabled]="page==1" [class.waves-effect]="page!=1"><a routerLink="." [queryParams]="{ page: page<=1?1:page-1 }"><i class="material-icons">chevron_left</i></a></li>
+        <li *ngFor="let p of pages" [class.active]="page==p" [class.waves-effect]="page!=p"><a routerLink="." [queryParams]="{ page: p }">{{p}}</a></li>
+        <li [class.disabled]="page==maxPage" [class.waves-effect]="page!=maxPage"><a routerLink="." [queryParams]="{ page: page>=maxPage?maxPage:page+1 }"><i class="material-icons">chevron_right</i></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="slider-delete-prompt" class="modal" [materialize-modal]="true" *mobxAutorun>
+  <div class="modal-content center-align">
+    <h4>{{ lang.ui.generaldeletewarn }}</h4>
+    <div  *ngIf="selectedSlider">
+      <h5 class="green-text">{{ selectedSlider.Title }}</h5>
+      <p>{{ selectedSlider.Desc }}</p>
+      <img [src]="getUrl(selectedSlider.Path)">
+      <br>
+      <form (submit)="delete()">
+        <button class="btn btn-rounded red waves-effect" [disabled]="isLoading" type="submit">
+          {{ lang.ui.confirm }}
+        </button>
+        <a class="btn btn-rounded grey modal-close">
+          {{ lang.ui.cancel }}
+        </a>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<!-- Filter Option -->
+<div class="container">
+  <div class="row">
+      <div class="col s12">
+        <h5 class="center">{{ lang.ui.songmanage }}</h5>
+        <br>
+        <div class="col s12 m12 l6">
+          <form [formGroup]="filterForm">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">search</i>
+              <input id="icon_prefix" type="text" formControlName="filterInput" class="validate">
+              <label for="icon_prefix">{{ lang.ui.findsong }}</label>
+            </div>
+          </form>
+        </div>
+        <div class="col s12 m12 l6 right-align">
+          <a class="btn btn-large bg-green-to-light waves-effect btn-rounded" [routerLink]="baseUrl+'/upload'"><i class="material-icons left">add</i>{{ lang.ui.upload }}</a>
+        </div>
+      </div>
+      <div class="input-field col s12 m8 l5">
+          <select [(ngModel)]="filterType" (change)="onFilterChanged()" materialize-select="0">
+            <option value="0">{{ lang.ui.allfilter }}</option>
+            <option value="2">{{ lang.ui.allowedfilter }}</option>
+            <option value="1">{{ lang.ui.notallowedfilter }}</option>
+          </select>
+          <label>{{lang.ui.listfilter}}</label>
+        </div>
+      
+        <div class="input-field col s12 m12 l7 right-align" *ngIf="isAdmin">
+          <button [disabled]="isLoading || !songchecker || songchecker.length==0 || countCheckedSongs()==0" (click)="approve(1)" class="btn btn-rounded green waves-effect" type="button"><i class="material-icons left">done</i>{{lang.ui.allowsong}}</button>
+          <button [disabled]="isLoading ||!songchecker || songchecker.length==0 || countCheckedSongs()==0" (click)="approve(3)" class="btn btn-rounded red waves-effect"  type="button"><i class="material-icons left">done</i>{{lang.ui.rightallow}}</button>
+        </div>
+  </div>
+  <br>
+  <!-- Tables -->
+  <div #songTable *mobxAutorun>
+    <div class="col s12 center-align" *ngIf="!loader.isSubLoading && songList && songList.length==0" style="margin-bottom: 150px">
+      <h4 >{{ lang.ui.foundnosong }}</h4>
+    </div>
+    <table class="highlight white" *ngIf="songList && songList.length>0">
+      <thead>
+        <tr>
+          <th>
+            <label>
+              <input type="checkbox" [checked]="isCheckedAll" (click)="toggleChecker()" />
+              <span></span>
+            </label>
+          </th>
+            <th>{{ lang.ui.songname }}</th>
+            <th class="hide-on-med-and-down">{{ lang.ui.uploadedon }}</th>
+            <th>{{ lang.ui.uploadedby }}</th>
+            <th>{{ lang.ui.action }}</th>
+        </tr>
+      </thead>
+
+      <tbody [@transition]="songList">
+        <tr class="lighten-5" *ngFor="let item of songList; let i = index" [ngClass]="{'light-green': item.Approved==1 && !songchecker[i],'red': item.Approved>2  && !songchecker[i],'blue': songchecker[i]}">
+          <td>
+            <label>
+              <input type="checkbox" class="filled-in" [(ngModel)]="songchecker[i]" />
+              <span></span>
+            </label>
+          </td>
+          <td class="link" (click)="edit(item)" [title]="lang.ui.edit">
+            <a [routerLink]="[ item.Approved?'/songs/detail/'+item.Id:'.' ]" style="margin-right: 10px; color: black;">{{ item.Name }}</a>
+            <span class="new badge green" *ngIf="item.Approved==1" data-badge-caption=" ">{{ lang.ui.approved }}</span>
+            <span class="new badge red" *ngIf="item.Approved>2" data-badge-caption=" ">{{ lang.ui.rightsong }}</span>
+            <span class="new badge pink" *ngIf="item.SelfPerformance>0" data-badge-caption=" ">{{ lang.ui.mysong }}</span>
+          </td>
+          <td class="hide-on-med-and-down link" (click)="edit(item)">{{ item.CreatedOn | date:'dd/MM/yyyy' }}</td>
+          <td>{{ item.UploadedUser?.DisplayName || item.UploadedUser?.Username || lang.ui.notfound }}</td>
+          <td>
+            <a class="btn-floating waves-effect waves-light" *ngIf="item.Approved>0 || isAdmin" [hidden]="player.isPlaying && player.currentSong.getValue() && player.currentSong.getValue().Id==item.Id" [class.blue]="player.findIndex(item)<0" [class.grey]="player.findIndex(item)>=0" (click)="player.addToPlaylist(item)"><i class="material-icons">play_arrow</i></a>
+            <a class="btn-floating waves-effect waves-light red pulse" *ngIf="player.isPlaying && player.currentSong.getValue() && player.currentSong.getValue().Id==item.Id" (click)="player.pause()"><i class="material-icons">pause</i></a>
+            <!-- <a class="btn-floating waves-effect waves-light green" (click)="edit(item)"><i class="material-icons">edit</i></a> -->
+            <a class="btn-floating waves-effect waves-light red modal-trigger" data-target="delete-song-modal" (click)="setCurrentSong(item)"><i class="material-icons">delete</i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination -->
+  <ul class="pagination center" *ngIf="pages && pages.length>1">
+    <li [class.disabled]="currentPage==1" [class.waves-effect]="currentPage!=1" [routerLink]="[baseUrl+'/page',currentPage>1?currentPage-1:currentPage]"><a href="javascript:void(0)"><i class="material-icons">chevron_left</i></a></li>
+    <li *ngFor="let p of pages" [routerLink]="[baseUrl+'/page',p]" routerLinkActive="active"><a href="javascript:void(0)">{{p}}</a></li>
+    <li [class.disabled]="currentPage==pages.length" [class.waves-effect]="currentPage!=pages.length" [routerLink]="[baseUrl+'/page',currentPage<pages.length?currentPage+1:currentPage]"><a href="javascript:void(0)"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+
+  <div class="row right-align" *ngIf="songList && songList.length">
+    <br>
+    <button [disabled]="!songchecker || songchecker.length==0 || countCheckedSongs()==0" class="btn btn-large btn-rounded bg-red-to-light waves-effect modal-trigger" data-target="delete-song-modal" type="button" (click)="setListOfSong()"><i class="material-icons left">delete_sweep</i>{{lang.ui.delete}}</button>
+  </div>
+</div>
+<app-edit-song (onChanged)="onSaved($event)"></app-edit-song>
+<app-delete-song [selectedSong]="selectedSong" [selectedSongList]="selectedSongList" (reloader)="fetch()"></app-delete-song>

@@ -1,0 +1,40 @@
+.background-container{
+    width: 100%;
+    display:block;
+    height: 300px;
+    overflow: hidden;
+}
+.artist-info{
+    position: relative;
+    display:block;
+    height: auto;
+    width: 100%;
+    transform: translateY(-100px);
+    padding: 10px 0px;
+}
+.avatar{
+    float: left;
+    margin-left: 6%;
+    width: 188px;
+    height: 188px;
+    border: 6px solid white;
+    box-shadow: 1px 2px 3px rgba(15,15,15,0.4);
+    border-radius: 50%;
+    overflow: hidden;
+}
+.avatar img{
+    transform: scale(1.01);
+}
+
+.artist-info .text{
+    color: white;
+    font-weight: 500;
+    position: relative;
+    float: left;
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.text h4{
+    text-shadow: 1px 1px 2px rgba(15,15,15,0.4);
+}

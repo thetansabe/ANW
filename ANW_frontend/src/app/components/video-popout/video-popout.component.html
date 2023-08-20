@@ -1,0 +1,7 @@
+<div>
+  <div class="video-container" [class.show]="isOpen && src">
+    <h6 class="video-title center" *ngIf="currentVideo" [innerHTML]="currentVideo.Name"></h6>
+    <video #video class="video" [src]="src" controls></video>
+  </div>
+  <div class="shader" (click)="close()"></div>
+</div>

@@ -1,0 +1,20 @@
+
+<div class="row container center-align">
+  <br><br>
+  <h4>Loading...</h4>
+  <h5>Everything will be set up automatically...</h5>
+    <div class="progress" *ngIf="!initSuccess">
+        <div class="indeterminate blue"></div>
+    </div>
+  <div class="col s12 center-align" *ngIf="initSuccess">
+    <h4>
+      Server database initialized successful.
+    </h4>
+    <h5>You can now log in with this user</h5>
+    <h6><b>Username:</b> root</h6>
+    <h6><b>Password:</b> root</h6>
+    <br>
+    <h5 *ngIf="countdown && countdown>=0">You will be redirected to the homepage after {{ countdown }} seconds.</h5>
+    <a class="btn btn-large btn-rounded" routerLink="/">Return now</a>
+  </div>
+</div>

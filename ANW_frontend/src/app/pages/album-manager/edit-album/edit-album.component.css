@@ -1,0 +1,9 @@
+.album-cover{
+    position: relative;
+    display: inline-block;
+    width: 95%;
+    height: 300px;
+    margin-top: 50%;
+    margin-bottom: -45%;
+    transform: translateY(-50%);
+}

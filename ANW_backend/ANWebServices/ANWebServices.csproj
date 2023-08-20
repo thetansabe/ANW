@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+    <PackageReference Include="NAudio" Version="1.9.0-preview1" />
+    <PackageReference Include="z440.atl.core" Version="2.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LameDLLWrap">
+      <HintPath>..\NAudio\LameDLLWrap.dll</HintPath>
+    </Reference>
+    <Reference Include="LameMp3">
+      <HintPath>..\NAudio\LameMp3.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+</Project>

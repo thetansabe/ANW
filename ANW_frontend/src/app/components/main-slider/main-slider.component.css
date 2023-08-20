@@ -1,0 +1,33 @@
+.slider{
+    position: absolute;
+    display: block;
+    top:0;
+    left: 0;
+    z-index: 2;
+    height: 320px !important;
+}
+
+.slider .slides{
+    display: inline-block;
+    z-index: 0;
+}
+
+.slider .slides li{
+    z-index:0 !important;
+}
+
+.slider .indicator{
+    bottom: 35px !important;
+    z-index: 10;
+}
+.slider .slides h3, .slider .slides h4, .slider .slides h5, .slider .slides h6{
+    text-shadow: 
+        2px 0px rgb(0,0,0,0.4),
+        -2px 0px rgb(0,0,0,0.4),
+        0px 2px rgb(0,0,0,0.4),
+        0px -2px rgb(0,0,0,0.4);
+    user-select: none;
+}
+.slider .slides li img{
+    background-position: 0 30%;
+}

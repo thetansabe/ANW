@@ -1,0 +1,19 @@
+<div id="delete-song-modal" class="modal" [materialize-modal]="true">
+  <div class="modal-content center-align">
+    <h4>{{ lang.ui.songdeleteprompt }}</h4>
+    <div *ngIf="selectedSong">
+      <p><b>{{ lang.ui.songname }}</b>: {{ selectedSong.Name }}</p>
+      <p><b>{{ lang.ui.uploadedon }}</b>: {{ selectedSong.CreatedOn | date:'dd/MM/yyyy'}}</p>
+    </div>
+    <div *ngIf="selectedSongList && selectedSongList.length">
+      <div class="chip center" *ngFor="let song of selectedSongList">{{ song.Name }}
+        <i class="close material-icons" (click)="remove(song)">close</i>
+      </div>
+    </div>
+    <br>
+    <form (submit)="submit()">
+      <button type="submit" class="btn btn-rounded red">{{ lang.ui.confirm }}</button>
+      <a class="btn btn-rounded waves-effect grey modal-close">{{ lang.ui.cancel }}</a>
+    </form>
+  </div>
+</div>

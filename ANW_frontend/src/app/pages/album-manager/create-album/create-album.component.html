@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row white" [@transition]>
+    <div class="col s12 center-align">
+      <h5>{{ lang.ui.create_album }}</h5>
+      <br>
+    </div>
+    <div class="col s12">
+      <a class="btn btn-rounded grey" routerLink=".."><i class="material-icons left">arrow_back_ios</i>{{ lang.ui.back }}</a>
+      <br>
+    </div>
+    <div class="col s12" *mobxAutorun>
+      <form [formGroup]="form" (submit)="submit()">
+        <div class="col s11 m11 l10 input-field">
+            <input [readonly]='isLoading' id="album-name" type="text" formControlName="name" class="validate" required>
+            <label for="album-name">{{ lang.ui.album }}</label>
+            <span class="helper-text red-text" *ngIf="form.get('name').invalid && !form.pristine">{{ lang.ui.validate_noempty }}</span>
+        </div>
+        <div class="col s12 input-field">
+            <textarea [readonly]='isLoading' id="album-desc" formControlName="desc" class="materialize-textarea" maxlength="300"></textarea>
+            <label for="album-desc">{{ lang.ui.description }}</label>
+        </div>
+        <div class="input-field col s12">
+          <div class="chips" [materialize-chips]="'+ '+lang.ui.artist"></div>
+        </div>
+        <div class="file-field input-field col s12">
+            <div class="btn btn-rounded waves-effect btn-large" [ngClass]="{'red pulse': !form.pristine && !file,'green': file || form.pristine }">
+              <span><i class="material-icons left">search</i>{{ lang.ui.browse }}</span>
+              <input type="file" accept="image/*" (change)="setFile($event)">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path" type="text" readonly>
+            </div>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">search</i>
+          <input [readonly]='isLoading' id="album-search" type="text" formControlName="filterSong" (keydown)="onFilterKeyPress($event)">
+          <label for="album-search">{{ lang.ui.search }}</label>
+        </div>
+        <div class="col s12" *ngIf="isSearching">
+          <div class="progress">
+            <div class="indeterminate blue"></div>
+          </div>
+        </div>
+        <div class="col s12">
+            <div class="chip" *ngFor="let song of selectedSong">
+              {{ song.Name }}
+              <i class="close material-icons" (click)="removeSong(song)">close</i>
+            </div>
+        </div>
+        <div class="input-field col s12 song-list-container">
+            <div class="collection" *ngIf="songList">
+              <div *ngFor="let song of songList" class="link collection-item blue lighten-5" [@transition] (click)="addSong(song)">
+                {{ song.Name }}
+              </div>
+            </div>
+        </div>
+        <div class="col s12 center-align">
+          <button [disabled]="isLoading || !file || form.invalid" type="submit" class="btn btn-rounded btn-large bg-green-to-light waves-effect">
+              <div class="left btn-loader" *ngIf="isLoading">
+                  <div class="preloader-wrapper small active">
+                      <div class="spinner-layer spinner-green-only">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div><div class="gap-patch">
+                          <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            <i class="material-icons left" *ngIf="!isLoading">done</i>{{ lang.ui.save }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

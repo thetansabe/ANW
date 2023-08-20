@@ -1,0 +1,27 @@
+<nav class="z-depth-0">
+  <div class="nav-wrapper">
+    <ul id="nav-mobile" class="right">
+      <li><a  materialize-dropdown class="dropdown-trigger waves-effect" style="display: inherit" data-target="account-menu">
+        <div class="avatar left">
+          <img [r-img]="AvatarImg" r-position="center">
+        </div>
+        {{ profile.DisplayName || profile.Username }}
+      </a></li>
+    </ul>
+  </div>
+</nav>
+
+<ul id="account-menu" class="dropdown-content z-depth-3" style="vertical-align: middle; ">
+  <li><a routerLink="/account"><i class="material-icons left">account_circle</i>{{ lang.ui.account }}</a></li>
+  <li class="divider"></li>
+  <li><a class="link modal-trigger" data-target="admin-navbar-logout">{{ lang.ui.logout }}</a></li>
+</ul>
+
+<div id="admin-navbar-logout" class="modal" [materialize-modal]="true">
+  <div class="modal-content center-align">
+    <h5>{{ lang.ui.prompt_logout }}</h5>
+    <br>
+    <a class="btn btn-rounded red" (click)="logout()">{{ lang.ui.yes }}</a>
+    <a class="btn btn-rounded grey modal-close">{{ lang.ui.no }}</a>
+  </div>
+</div>

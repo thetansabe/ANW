@@ -1,0 +1,14 @@
+.modal{
+    z-index: 2500 !important;
+    max-width: 750px;
+}
+.collection a.collection-item{
+    color: dodgerblue;
+}
+.collection .collection-item.active{
+    background-color: dodgerblue;
+    color: white;
+}
+.indeterminate{
+    background-color: dodgerblue;
+}

@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="class s12 center-align">
+      <div class="cover-title z-depth-1 pink lighten-5">
+        <i class="material-icons middle" style="margin-right: 20px">favorite</i>{{ lang.ui.favorite }}
+      </div>
+    </div>
+    <div class="col s12 right-align">
+      <a class="btn btn-large green waves-effect btn-rounded" (click)="playAll()"><i class="material-icons left">play_arrow</i>{{ lang.ui.playall }}</a>
+    </div>
+    <div class="col s12" [@transition]>
+      <ul class="collection">
+        <li class="collection-item avatar" *ngFor="let song of list">
+          <i class="material-icons circle waves-effect" (click)="player.playSong(song)" [class.green]="!player.isThatSong(song)">{{ player.isThatSong(song)?'pause':'play_arrow'}}</i>
+          <a [routerLink]="['/home/songs/detail', song.Id]" class="title">{{ song.Name }}</a>
+          <p>
+            <span *ngFor="let artist of song.ArtistList; let i=index">
+              {{ i>0?',':'' }}
+              {{ artist.Name }}
+            </span>
+          </p>
+          <a class="link secondary-content" (click)="favorite(song)">
+            <i class="material-icons" [class.grey-text]="!isFavorite(song)" [class.pink-text]="isFavorite(song)">favorite</i>
+          </a>
+        </li>
+      </ul>
+      <div class="col s12 center-align">
+          <ul class="pagination" *ngIf="maxPage && maxPage>=2">
+              <li [class.disabled]="page<=1" [class.waves-effect]="page>1">
+                <a class="link" (click)="setPage(page-1)"><i class="material-icons">chevron_left</i></a>
+              </li>
+              <li *ngFor="let p of pages" [class.active]="page==p" [class.waves-effect]="page!=p">
+                <a class="link" (click)="setPage(p)">{{ p }}</a>
+              </li>
+              <li [class.disabled]="page>=maxPage" [class.waves-effect]="page<maxPage">
+                <a  class="link" (click)="setPage(page+1)"><i class="material-icons">chevron_right</i></a>
+              </li>
+            </ul>
+      </div>
+    </div>
+  </div>
+</div>

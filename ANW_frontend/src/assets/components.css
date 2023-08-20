@@ -1,0 +1,355 @@
+:root{
+    --color: dodgerblue;
+    --bg: white;
+}
+
+.btn-animation.ani-red{
+    --color: red;
+    --bg: white;
+}
+.btn-animation.ani-warn{
+    --color: orangered;
+    --bg: white;
+}
+.btn-animation.ani-orange{
+    --color: orange;
+    --bg: white;
+}
+.btn-animation.ani-gold{
+    --color: gold;
+    --bg: white;
+}
+.btn-animation.ani-yellow{
+    --color: yellow;
+    --bg: white;
+}
+.btn-animation.ani-lime{
+    --color: lawngreen;
+    --bg: white;
+}
+.btn-animation.ani-lightgreen{
+    --color: limegreen;
+    --bg: white;
+}
+.btn-animation.ani-green{
+    --color: green;
+    --bg: white;
+}
+.btn-animation.ani-cyan{
+    --color: cyan;
+    --bg: white;
+}
+.btn-animation.ani-sky{
+    --color: deepskyblue;
+    --bg: white;
+}
+.btn-animation.ani-blue{
+    --color: dodgerblue;
+    --bg: white;
+}
+.btn-animation.ani-darkblue{
+    --color: blue;
+    --bg: white;
+}
+.btn-animation.ani-grey{
+    --color: rgb(45,45,45);
+    --bg: white;
+}
+
+.btn-animation{
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+    height: 60px;
+    line-height: 55px;
+    background: var(--color);
+    transition: all ease-in-out 0.2s;
+    border: 2px solid var(--bg);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.btn-animation.large{
+    width: 80px;
+    height: 80px;
+    line-height: 75px;
+}
+
+.btn-animation i{
+    line-height: 59px;
+    color: var(--bg);
+    transition: all ease-in-out 0.3s;
+}
+.btn-animation.large i{
+    line-height: 79px;
+}
+
+.btn{
+    margin-right: 0.8em;
+}
+
+.btn-animation span{
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--bg);
+    transition: all ease-in-out 0.3s;
+}
+
+.btn-animation:hover{
+    background: var(--bg);
+    border: 2px solid var(--color);
+}
+
+.btn-animation:hover i{
+    color: var(--color);
+}
+
+.btn-animation:hover span{
+    color: var(--color);
+}
+
+.btn.bg-green-to-light{
+    background: linear-gradient(to right, limegreen,limegreen , greenyellow, limegreen );
+    background-size: 200% 100%;
+    background-position: 20% 0;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid limegreen;
+}
+
+.btn.bg-green-to-light:hover{
+    background-position: 50% 0;
+    font-weight: 400;
+    text-shadow: 1px 2px 1px rgba(0,0,0,0.5);
+    box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
+    border: 1px solid lightgreen;
+}
+
+.btn.bg-red-to-light{
+    background: linear-gradient(to right, darkorange, orangered, darkorange);
+    background-size: 150% 100%;
+    background-position: 100% 0;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid orangered;
+}
+
+.btn.bg-red-to-light:hover{
+    background-position: -20% 0;
+    font-weight: 400;
+    text-shadow: 1px 2px 1px rgba(0,0,0,0.5);
+    box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
+    border: 1px solid rgb(255, 131, 131);
+}
+
+
+.btn.bg-blue-to-light{
+    background: linear-gradient(to right, DarkTurquoise , dodgerblue, DarkTurquoise);
+    background-size: 150% 100%;
+    background-position: 100% 0;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid dodgerblue;
+}
+
+.btn.bg-blue-to-light:hover{
+    background-position: -20% 0;
+    font-weight: 400;
+    text-shadow: 1px 2px 1px rgba(0,0,0,0.5);
+    box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
+    border: 1px solid cyan;
+}
+
+
+.btn.bg-yellow-to-light{
+    background: linear-gradient(to right, yellow , gold, yellow);
+    background-size: 150% 100%;
+    background-position: 100% 0;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid gold;
+    color: black !important;
+}
+
+.btn.bg-yellow-to-light:hover{
+    background-position: -20% 0;
+    font-weight: 400;
+    text-shadow: 0px 0px 2px rgba(255,255,255,1);
+    box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
+    border: 1px solid yellow;
+}
+
+.btn.bg-yellow-to-light:disabled{
+    background: black;
+    border: 1px solid gray;
+    color: gray !important;
+}
+.btn.bg-blue-to-light:disabled{
+    background: black;
+    border: 1px solid gray;
+    color: gray !important;
+}
+.btn.bg-green-to-light:disabled{
+    background: black;
+    border: 1px solid gray;
+    color: gray !important;
+}
+.btn.bg-red-to-light:disabled{
+    background: black;
+    border: 1px solid gray;
+    color: gray !important;
+}
+
+.btn.bg-yellow-to-light.disabled{
+    background: black;
+    border: 1px solid gray;
+    color: gray !important;
+}
+.btn.bg-blue-to-light.disabled{
+    background: black;
+    border: 1px solid gray;
+    color: gray !important;
+}
+.btn.bg-green-to-light.disabled{
+    background: black;
+    border: 1px solid gray;
+    color: gray !important;
+}
+.btn.bg-red-to-light.disabled{
+    background: black;
+    border: 1px solid gray;
+    color: gray !important;
+}
+
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid dodgerblue;
+  -webkit-box-shadow: 0 1px 0 0 dodgerblue;
+          box-shadow: 0 1px 0 0 dodgerblue;
+}
+
+.chips.focus {
+  border-bottom: 1px solid dodgerblue;
+  -webkit-box-shadow: 0 1px 0 0 dodgerblue;
+          box-shadow: 0 1px 0 0 dodgerblue;
+}
+.chip:focus{
+    background-color: dodgerblue;
+}
+
+input:not([type]):focus:not([readonly]) + label,
+input[type=text]:not(.browser-default):focus:not([readonly]) + label,
+input[type=password]:not(.browser-default):focus:not([readonly]) + label,
+input[type=email]:not(.browser-default):focus:not([readonly]) + label,
+input[type=url]:not(.browser-default):focus:not([readonly]) + label,
+input[type=time]:not(.browser-default):focus:not([readonly]) + label,
+input[type=date]:not(.browser-default):focus:not([readonly]) + label,
+input[type=datetime]:not(.browser-default):focus:not([readonly]) + label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label,
+input[type=tel]:not(.browser-default):focus:not([readonly]) + label,
+input[type=number]:not(.browser-default):focus:not([readonly]) + label,
+input[type=search]:not(.browser-default):focus:not([readonly]) + label,
+textarea.materialize-textarea:focus:not([readonly]) + label {
+  color: dodgerblue;
+}
+[type="checkbox"].filled-in:checked+span:not(.lever):after{
+    border: 2px solid dodgerblue;
+    background-color: dodgerblue;
+}
+.dropdown-content li>a, .dropdown-content li>span{
+    color: black;
+}
+.select-dropdown.dropdown-content li.selected{
+    background-color: rgba(0,0,0,0.1);
+}
+.dropdown-content li.selected>span{
+    color: rgba(65,65,65,1) !important;
+}
+.input-field .prefix.active{
+    color: dodgerblue;
+}
+/* ================ ALIGN ================== */
+.center-component{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.btn-loader{
+    display:none;
+}
+
+.btn-large:disabled .btn-loader{
+    display:inline-block;
+    margin-top:22px;
+    margin-right: 10px;
+    transform: scale(0.6) translateY(-50%);
+}
+.btn-large:disabled .btn-loader .spinner-layer{
+    border-color: grey !important;
+}
+
+.spinner-white,
+.spinner-white-only {
+  border-color: white;
+}
+
+.btn-rounded{
+    border-radius: 40px;
+}
+
+.max-width-600px{
+    max-width: 600px;
+}
+
+.max-width-60{
+    max-width: 60% !important;
+}
+
+.clipper-large .circle{
+    border-width: 5px;
+}
+
+
+    .slider .indicators .indicator-item {
+        height: 10px;
+        width: 10px;
+        margin: 0 8px;
+        bottom: 10px;
+        box-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+    }
+
+.self-centered{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+td{
+    padding: 2px 3px;
+}
+
+.chip{
+    position: relative;
+    max-width: 210px;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-right: 32px;
+}
+.chip .close{
+    position: absolute;
+    right: 0px;
+    background: #e4e4e4;
+    padding-right: 8px;
+}

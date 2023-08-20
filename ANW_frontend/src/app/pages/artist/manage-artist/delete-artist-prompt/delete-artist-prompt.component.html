@@ -1,0 +1,12 @@
+<div class="modal" materialize-modal>
+  <div class="modal-content center-align">
+    <h5>{{ lang.ui.generaldeletewarn }}</h5>
+    <div class="row" *ngIf="selectedArtists">
+      <h6 *ngFor="let artist of selectedArtists">{{ artist.Name }}{{ artist.CountryName?' - '+artist.CountryName:'' }}</h6>
+    </div>
+    <div class="row col s12">
+      <button type="button" class="btn btn-rounded red" [disabled]="isLoading" (click)="confirm()">{{ lang.ui.delete }}</button>
+      <a class="btn btn-rounded grey modal-close">{{ lang.ui.cancel }}</a>
+    </div>
+  </div>
+</div>

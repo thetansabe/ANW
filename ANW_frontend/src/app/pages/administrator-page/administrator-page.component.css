@@ -1,0 +1,30 @@
+.admin-content{
+    padding-left: 250px;
+    min-height: 100vh;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+@media only screen and (max-width: 992px){
+    .admin-content{
+        padding-left: 76px;
+    }
+}
+
+.footer{
+    display:block;
+    bottom: 0;
+    width: 80%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 400px;
+    text-align: center;
+    border-top: 1px solid rgba(45,45,45,0.1);
+    padding-top: 12px;
+    margin-top: 80px;
+    color: grey;
+    user-select: none;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}

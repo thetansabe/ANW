@@ -1,0 +1,17 @@
+.parallax-container{
+    height: 300px;
+}
+.parallax-container .parallax img{
+    width: 100%;
+}
+
+blockquote{
+    border-left: 5px solid dodgerblue;
+}
+
+#register-form{
+    background-color: white;
+    padding: 30px 60px;
+    max-width: 660px;
+    border-radius: 2px;
+}

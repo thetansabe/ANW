@@ -1,0 +1,27 @@
+<div id="main">
+  <div class="loader" [class.show]="loader.isLoading || loader.isSubLoading">
+    <div class="loader-gap waves-effect" [class.pulse]="loader.isLoading || loader.isSubLoading">
+      <div class="preloader-wrapper big clipper-large active">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+<!-- Router content -->
+  <div class="router-content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-cookie-policy></app-cookie-policy>
+<!-- Music Player-->
+<music-player></music-player>
+  <!-- Footer -->
+</div>

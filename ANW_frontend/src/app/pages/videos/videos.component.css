@@ -1,0 +1,48 @@
+.video-box{
+    width: 250px;
+    height: 225px;
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    box-shadow: 1px 1px 3px rgba(88,88,88,0.2);
+}
+.video-box-thumbnail{
+    height: 150px;
+    width: 100%;
+    display:block;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+.video-box-thumbnail > img{
+    z-index: 1;
+    transition: 0.2s ease-in all;
+    transform: scale(1.06);
+}
+.video-box-thumbnail:hover > img{
+    transform: scale(1.01);
+}
+.video-box-thumbnail > .overlay{
+    z-index: 5;
+    opacity: 0;
+    background: rgba(0,0,0,0.7);
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    transition: 0.3s ease-in-out all;
+}
+.video-box-thumbnail:hover > .overlay{
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+.video-box-content{
+    height: 75px;
+    width: 100%;
+    padding: 5px 15px;
+    display: block;
+    overflow: hidden;
+}

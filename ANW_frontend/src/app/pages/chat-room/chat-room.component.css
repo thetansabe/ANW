@@ -1,0 +1,135 @@
+#chat-background{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(15px);
+}
+
+.blocker{
+    padding-top: 60px;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 96vh;
+    display: block;
+    position: relative;
+}
+
+.light-bg{
+    background: rgba(15,15,15,0.7);
+    border-radius: 1px;
+    box-shadow: 2px 4px 4px rgba(15,15,15,0.3);
+    margin-left: 0px;
+    padding-top: 15px;
+}
+.collection{
+    border:none;
+}
+.collection a.collection-item{
+    color: white;
+}
+.collection.with-header .collection-header{
+    border: none;
+    background-color: transparent;
+}
+.collection .collection-item{
+    border: none;
+    background-color: transparent;
+}
+.collection .collection-item:hover{
+    background-color: rgba(255,255,255,0.2);
+}
+.collection .collection-item.active{
+    background-color: rgba(255,255,255,0.4);
+}
+.collection-header h4,.collection-header h5,.collection-header h6{
+    color: white;
+}
+
+.user-chat{
+    display:block;
+    width: 100%;
+    height: auto;
+    min-height: 64px;
+    padding-left: 5px;
+    padding-right: 15px;
+    margin-bottom: 20px;
+    position: relative;
+}
+.avatar{
+    position: absolute;
+    width: 61px;
+    height: 61px;
+    top: 1px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+.avatar img{
+    transform: scale(1.02);
+}
+.user-chat:not(.self) .avatar{
+    left: 5px;
+}
+.user-chat.self .avatar{
+    right: 5px;
+}
+.time-info{
+    color: rgba(188,188,188,0.9);
+    font-size: 0.9em;
+}
+.event-info{
+    color: rgba(188,188,188,0.9);
+    font-size: 0.9em;
+    align-self: center;
+}
+.user-chat:not(.self) .time-info{
+    text-align: left;
+    margin-left: 75px;
+}
+.user-chat.self .time-info{
+    color: rgba(188,188,188,0.9);
+    text-align: right;
+}
+.chat-content{
+    display: inline-block;
+    padding: 8px 14px;
+    height: auto;
+    width: auto;
+    min-height: 24px;
+    border-radius: 0px 7px 10px 7px;
+    background: linear-gradient(to left,rgb(202,202,202),rgb(232,232,232));
+    background-size: 140% 140%;
+    color: rgb(32,32,32);
+    margin: 1.2px 0px 0px 0px;
+    overflow-wrap: break-word;
+    max-width: 92%;
+    transition: 0.2s all ease;
+}
+.user-chat:not(.self) .chat-content{
+    max-width: 83%;
+}
+.content-chat-container{
+    display:block;
+}
+
+.user-chat.self .chat-content{
+    border-radius: 7px 0px 7px 10px;
+    background: linear-gradient(to left, dodgerblue, dodgerblue, rgb(47, 127, 207));
+    color: rgb(244,244,244);
+    text-align: right;
+}
+.user-chat:not(.self) .chat-content{
+    margin-left: 75px;
+    border-radius: 0px 7px 10px 7px;
+    color: rgb(244,244,244);
+    color: rgb(33,33,33);
+}
+.user-chat.self .content-chat-container{
+    text-align: right;
+}
+.chat-content.not-send{
+    opacity: 0.5;
+}

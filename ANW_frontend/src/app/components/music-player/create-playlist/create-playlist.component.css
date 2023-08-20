@@ -1,0 +1,5 @@
+.modal{
+    max-width: 800px;
+    padding: 33px 50px;
+    z-index: 2500 !important;
+}

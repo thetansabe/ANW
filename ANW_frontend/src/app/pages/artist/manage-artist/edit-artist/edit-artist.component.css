@@ -1,0 +1,10 @@
+.preview-image{
+    width: 160px;
+    height: 120px;
+    display: block;
+    position: relative;
+}
+
+.modal-content{
+    padding: 15px 45px;
+}

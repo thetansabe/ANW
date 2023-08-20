@@ -1,0 +1,99 @@
+
+    <div class="parallax-container">
+      <div materialize-parallax class="parallax"><img src="../../../assets/images/bg.jpg"></div>
+    </div>
+
+<div class="grey lighten-3" style="padding-bottom: 30px; padding-top:2px;" *mobxAutorun>
+  <form id="register-form" action="" class="self-centered center-align z-depth-1" [formGroup]="register_form" (submit)="register($event)" [@transition]>
+    <h4>{{ lang.ui.register }}</h4>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="f.username" formControlName="username" type="text" [class.invalid]="register_form.get('username').invalid && !register_form.pristine || userConflicted" [class.valid]="register_form.get('username').valid && !register_form.pristine" required>
+        <label for="f.username">{{ lang.ui.username }}</label>
+        <span class="helper-text red-text left-align" *ngIf="register_form.get('username').invalid && !register_form.pristine">{{ lang.ui.usernameinvalid }}</span>
+        <span class="helper-text red-text" *ngIf="userConflicted">{{ lang.ui.usernameconflicted }}</span>
+      </div>
+      <div class="input-field col s12 left-align">
+        <input id="f.password" formControlName="password" type="password" class="validate" required>
+        <label for="f.password">{{ lang.ui.password }}</label>
+        <span class="helper-text" *ngFor="let desc of lang.ui.passwordguide">- {{ desc }}</span>
+      </div>
+      <div class="input-field col s12 left-align">
+        <input id="f.repeatpassword" formControlName="repeatpassword"  type="password" [ngClass]="{ valid: !repeatInvalid && passwordLengthValid(), invalid: repeatInvalid }" required>
+        <label for="f.repeatpassword">{{ lang.ui.repeatpass }}</label>
+        <span class="helper-text red-text" *ngIf="repeatInvalid">{{ lang.ui.passnotmatch }}</span>
+      </div>
+      <div class="input-field col s12">
+        <input id="f.email" formControlName="email" type="text" [class.invalid]="register_form.get('email').invalid && !register_form.get('email').pristine || emailConflicted" [class.valid]="register_form.get('email').valid && !register_form.get('email').pristine" required>
+        <label for="f.email">{{ lang.ui.email }}</label>
+        <span class="helper-text red-text left-align" *ngIf="register_form.get('email').invalid && !register_form.get('email').pristine">{{ lang.ui.emailinvalid }}</span>
+        <span class="helper-text red-text" *ngIf="emailConflicted">{{ lang.ui.emailconflicted }}</span>
+      </div>
+      <div class="col s12">
+        <div class="row">
+          <blockquote>
+            <h6>{{ lang.ui.userinfo }}</h6>
+              <div class="input-field col s12">
+                <input id="f.fullname" formControlName="fullname"  type="text" class="validate">
+                <label for="f.fullname">{{ lang.ui.fullname }}</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="f.phone" formControlName="phone"  type="tel" [class.invalid]="register_form.get('phone').invalid" [class.valid]="register_form.get('phone').valid && register_form.get('phone').value.length>0">
+                <label for="f.phone">{{ lang.ui.phone }}</label>
+                <span class="helper-text red-text left-align" *ngIf="register_form.get('phone').invalid">{{ lang.ui.phoneinvalid }}</span>
+              </div>
+              <div class="input-field col s12">
+                <input id="f.idcard" formControlName="idcard"type="tel" class="validate">
+                <label for="f.idcard">{{ lang.ui.idcard }}</label>
+              </div>
+              <div class="col s12 left-align">
+                <br>
+                  <label>
+                      <input type="checkbox" formControlName="agreement" class="filled-in" />
+                      <span>{{ lang.ui.acceptagreement }}</span>
+                  </label>
+              </div>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+        <div class="col s12">
+            <button class="btn btn-large waves-effect waves-light btn-rounded bg-blue-to-light" type="submit" [disabled]="requesting" [class.disabled]="!registerValid">
+              <div class="left btn-loader">
+                  <div class="preloader-wrapper small active">
+                      <div class="spinner-layer spinner-green-only">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div><div class="gap-patch">
+                          <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+              <i class="material-icons left" *ngIf="!requesting">edit</i>
+               {{ requesting? lang.ui.requesting : lang.ui.register }}
+              </button>
+            <button type="button" data-target="leave-prompt" class="btn waves-effect waves-light btn-rounded grey modal-trigger">
+                <i class="material-icons left">home</i>{{ lang.ui.home }}
+            </button>
+        </div>
+      </div>
+    
+  </form>
+</div>
+
+<!-- Modal Prompt -->
+<div id="leave-prompt" class="modal" [materialize-modal]="false">
+    <div class="modal-content center-align">
+      <h5>{{ lang.ui.leaveprompt }}</h5>
+      <p>{{ lang.ui.leavetip }}</p>
+      <div class="row center-align">
+          <a (click)="gotoHomepage()" class="btn  modal-close waves-effect waves-light btn-rounded red">{{ lang.ui.confirm }}</a>
+          <a class="btn modal-close waves-effect btn-rounded waves-green grey">{{ lang.ui.cancel }}</a>
+      </div>
+    </div>
+  </div>

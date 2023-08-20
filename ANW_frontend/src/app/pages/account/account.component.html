@@ -1,0 +1,59 @@
+<app-nav></app-nav>
+<div class="row">
+    <div class="col s1 m3 l4" style="overflow-x: hidden;">
+        <img src="../../../assets/images/singer.png" class="cover-image">
+    </div>
+    <div class="col s11 m9 l8 white z-depth-2" style="padding: 2em 3em; z-index: 50; min-height: 600px;" [@transition]>
+        <div class="s12" style="min-height: 100px">
+            
+        </div>
+        <div class="s12 m12 l5" *ngIf="info">
+            <div class="avatar-container">
+                <img class="avatar" [src]="info.AvatarImg?getUrl:'../../../assets/images/icons/empty-user.png'"
+                >
+                <form action="#" style="position: absolute; bottom:0;">
+                <div class="file-field input-field">
+                    <div class="btn btn-rounded waves-effect white black-text" [class.disabled]="isLoading">
+                        <span>{{ lang.ui.upload }}</span>
+                        <input type="file" (change)="upload($event)">
+                    </div>
+                    <div class="file-path-wrapper" style="visibility: hidden;">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+                </form>
+                            
+            </div>
+        </div>
+        <form (submit)="submit()" *ngIf="info && perm">
+            <div class="s12 m12 l7">
+                <div class="col s12 input-field">
+                    <input id="account" type="text" name="account" [(ngModel)]="info.Username" disabled>
+                    <label for="account" class="active">{{ lang.ui.account }}</label>
+                </div>
+                <div class="col s12 input-field">
+                    <input id="permission" type="text" name="permission" [(ngModel)]="perm.Name" disabled>
+                    <label for="permission" class="active">{{ lang.ui.accounttype }}</label>
+                </div>
+            </div>
+            <div class="col s12 m12 l10">
+                <div class="col s12 input-field" >
+                    <input id="displayname" type="text" name="displayname" [(ngModel)]="info.DisplayName" (dblclick)="enableEdit()" [readOnly]="!editEnable" [class.grey-text]="!editEnable">
+                    <label for="displayname" class="active" [materialize-tooltip]="lang.ui.hint_dblclickedit" tooltip-position="top">{{ lang.ui.displayname }}</label>
+                </div>
+                <div class="col s12 input-field">
+                    <input id="fullname" type="text" name="fullname" [(ngModel)]="info.FullName" (dblclick)="enableEdit()" [readOnly]="!editEnable" [class.grey-text]="!editEnable">
+                    <label for="fullname" class="active" [materialize-tooltip]="lang.ui.hint_dblclickedit"  tooltip-position="top">{{ lang.ui.fullname }}</label>
+                </div>
+            </div>
+            <div class="col s12 center-align">
+                <button type="submit" class="btn btn-rounded green" [disabled]="isLoading">
+                    {{ lang.ui.save }}
+                </button>
+                <button type="button" class="btn btn-rounded blue">
+                    {{ lang.ui.changepass }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

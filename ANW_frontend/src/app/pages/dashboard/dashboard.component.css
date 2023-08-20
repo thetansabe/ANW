@@ -1,0 +1,81 @@
+#background{
+    position: fixed;
+    left: 0;
+    top: 0;
+    filter: blur(3px);
+    background-size: cover;
+    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+.container{
+    position: relative;
+    top:0;
+    margin-bottom: 100px;
+}
+h4{
+    text-shadow: 1px 0px rgba(255,255,255,0.5),
+        0px 1px rgba(255,255,255,0.5),
+        -1px 0px rgba(255,255,255,0.5),
+        0px -1px rgba(255,255,255,0.5);
+}
+.dashboard-item{
+    width: 100%;
+    min-width: 400px;
+    max-width: 700px;
+    display: block;
+    position: relative;
+    height: 120px;
+    border-radius: 2px;
+    box-shadow: 1px 2px 3px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 10px;
+    background:white;
+    padding-right: 10px;
+}
+.dashboard-item .item-icon{
+    float:left;
+    width: 25%;
+    position: relative;
+    height: 100%;
+    align-content: center;
+    text-align: center;
+    padding: 20px;
+}
+.dashboard-item .item-title{
+    float: left;
+    position: relative;
+    width: 75%;
+    height: 40%;
+    top:0;
+    font-size: 1.3em;
+    font-weight: 500;
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.dashboard-item .item-desc{
+    float: left;
+    position: relative;
+    width: 75%;
+    height: 60%;
+    bottom:0;
+    padding-left: 20px;
+}
+.item-desc span{
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    margin-left: 20px;
+    font-size: 1em;
+    white-space: pre-wrap;
+}
+.dashboard-item:hover,.dashboard-item:focus{
+    box-shadow: 1px 3px 6px rgba(0,0,0,0.4);
+    transform: translate(-1px,-1px);
+}
+.dashboard-item:hover .item-desc span, .dashboard-item:focus .item-desc span{
+    margin-left: 0px;
+    opacity: 1;
+}

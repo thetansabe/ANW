@@ -1,0 +1,49 @@
+<img id="background" r-img="../../../assets//images/bg.jpg">
+<div class="center-align"  [@transition] *mobxAutorun>
+  <form id="login-form" class="max-width-600px" (submit)="login($event)">
+    <div class="col s12 left-align">
+      <a class="btn-floating red waves-effect" routerLink="/"><i class="material-icons">home</i></a>
+    </div>
+    <div class="col s12">
+        <h4>{{ lang.ui.login }}</h4></div>
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="material-icons prefix">account_circle</i>
+        <input id="f.username" [(ngModel)]="username" name="username" type="text" class="validate">
+        <label for="f.username">{{ lang.ui.username }}</label>
+      </div>
+      <div class="input-field col s12">
+          <i class="material-icons prefix">vpn_key</i>
+        <input id="f.password" [(ngModel)]="password" name="password" type="password" class="validate">
+        <label for="f.password">{{ lang.ui.password }}</label>
+        <a routerLink="/getpassword" class="right-align"><span class="helper-text blue-text">{{ lang.ui.iforgotpass }}</span></a>
+      </div>
+    </div>
+    
+    <div class="row">
+        <div class="col s12">
+            <button class="btn btn-large waves-effect waves-light btn-rounded bg-green-to-light" [disabled]="isRequesting" type="submit">
+                <div class="left btn-loader">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-green-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+              <i class="material-icons left" *ngIf="!isRequesting">verified_user</i>
+              {{ lang.ui.login }}</button>
+            <a routerLink="/register" class="btn btn-large waves-effect waves-light btn-rounded bg-blue-to-light">
+              <i class="material-icons left">person</i>
+              {{ lang.ui.register }}
+            </a>
+        </div>
+      </div>
+    
+  </form>
+</div>

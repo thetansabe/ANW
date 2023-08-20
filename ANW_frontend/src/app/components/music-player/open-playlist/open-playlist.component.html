@@ -1,0 +1,33 @@
+<div id="open-playlist-modal" class="modal" [materialize-modal]="true">
+  <div class="modal-content row">
+    <div class="col s12 center-align">
+      <h4>{{ lang.ui.open_playlist }}</h4>
+      <form [formGroup]="form">
+          <div class="input-field col s10">
+            <i class="material-icons prefix">search</i>
+            <input id="playlist-searchmy" type="text" formControlName="filterInput" class="validate">
+            <label for="playlist-searchmy">{{ lang.ui.find_playlist }}</label>
+          </div>
+      </form>
+    </div>
+    <div class="col s12" *mobxAutorun>
+        <div class="progress" *ngIf="isLoading">
+            <div class="indeterminate"></div>
+        </div>
+      <h5 class="center" *ngIf="playlists && playlists.length==0">
+        {{ lang.ui.no_playlist_found }}
+      </h5>
+        <div class="collection" *ngIf="playlists && playlists.length">
+          <a class="collection-item link" *ngFor="let playlist of playlists" [class.active]="player.currentPlaylist && player.currentPlaylist.Id==playlist.Id" (click)="setPlaylist(playlist)">
+            <i class="material-icons left">playlist_play</i>
+            {{ playlist.Name }} - 
+            {{ playlist.CreatedOn | date:'dd/MM/yyyy' }} 
+            ({{ playlist.Collection.length +' '+lang.ui.playlist_songs }})
+          </a>
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <a class="modal-close waves-effect waves-green btn-flat">{{ lang.ui.close }}</a>
+  </div>
+</div>

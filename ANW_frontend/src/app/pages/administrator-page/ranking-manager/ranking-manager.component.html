@@ -1,0 +1,75 @@
+<!-- Filter Option -->
+<div class="container">
+  <div class="row">
+      <div class="col s12">
+        <h5 class="center">{{ lang.ui.songmanage }}</h5>
+        <br>
+        <div class="col s12 m12 l6">
+          
+        </div>
+        <div class="col s12 m12 l6 right-align">
+          <a class="btn btn-large bg-green-to-light waves-effect btn-rounded"><i class="material-icons left">add</i>{{ lang.ui.upload }}</a>
+        </div>
+      </div>
+      <div class="input-field col s12 m8 l5">
+          <select materialize-select="0">
+            <option value="0">{{ lang.ui.allfilter }}</option>
+            <option value="2">{{ lang.ui.allowedfilter }}</option>
+            <option value="1">{{ lang.ui.notallowedfilter }}</option>
+          </select>
+          <label>{{lang.ui.listfilter}}</label>
+        </div>
+      
+        <div class="input-field col s12 m12 l7 right-align">
+
+        </div>
+  </div>
+  <br>
+  <!-- Tables -->
+  <div *mobxAutorun>
+    <div class="col s12 center-align" *ngIf="!loader.isSubLoading && rankList && rankList.length==0" style="margin-bottom: 150px">
+      <h4 >{{ lang.ui.foundnosong }}</h4>
+    </div>
+    <table class="highlight white" *ngIf="rankList && rankList.length>0">
+      <thead>
+        <tr>
+          <th>
+            <label>
+              <input type="checkbox" />
+              <span></span>
+            </label>
+          </th>
+            <th>{{ lang.ui.songname }}</th>
+            <th class="hide-on-med-and-down">{{ lang.ui.validfrom }}</th>
+            <th>{{ lang.ui.validto }}</th>
+            <th>{{ lang.ui.action }}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="lighten-5" *ngFor="let item of rankList; let i = index" >
+          <td>
+            <label>
+              <input type="checkbox" class="filled-in" />
+              <span></span>
+            </label>
+          </td>
+          <td class="link" [title]="lang.ui.edit">
+            <a style="margin-right: 10px; color: black;">{{ item.Song.Name }}</a>
+          </td>
+          <td class="hide-on-med-and-down link" >{{ item.ValidFrom | date:'dd/MM/yyyy' }}</td>
+          <td>{{ item.ValidTo | date:'dd/MM/yyyy'  }}</td>
+          <td>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination -->
+  <ul class="pagination center" *ngIf="pages && pages.length>1">
+    <li [class.disabled]="currentPage==1" [class.waves-effect]="currentPage!=1" routerLink="." [queryParams]="{ page: currentPage>1?currentPage-1:1, t: filter }"><a href="javascript:void(0)"><i class="material-icons">chevron_left</i></a></li>
+    <li *ngFor="let p of pages" routerLink="." [queryParams]="{page :p, t: filter }" routerLinkActive="active"><a href="javascript:void(0)">{{p}}</a></li>
+    <li [class.disabled]="currentPage==pages.length" [class.waves-effect]="currentPage!=pages.length" routerLink="." [queryParams]="{ page: currentPage<maxPage?currentPage+1:maxPage, t: filter }"><a href="javascript:void(0)"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12 center-align cover-title z-depth-1">
+      <i class="material-icons middle" style="margin-right: 20px">playlist_add</i>{{ lang.ui.myplaylist }}
+    </div>
+    <br>
+    <div class="col s12 right-align">
+      <a class="btn btn-large btn-rounded bg-green-to-light waves-effect">{{ lang.ui.newplaylist }}</a>
+    </div>
+    <div class="col s12" [@transition]>
+        <ul class="collection" *ngIf="playlists">
+            <li class="collection-item avatar" *ngFor="let playlist of playlists">
+              <i class="material-icons circle waves-effect" (click)="play(playlist)"
+                [class.grey]="isLoading || (player.currentPlaylist && player.currentPlaylist.Id==playlist.Id)" 
+                [class.blue]="!isLoading && player.currentPlaylist && player.currentPlaylist.Id!=playlist.Id">
+                {{ player.currentPlaylist&&player.currentPlaylist.Id==playlist.Id?'close':'play_arrow' }}
+              </i>
+              <div class="title"><b>{{ playlist.Name }}</b>
+                <span *ngIf="playlist.Public>=1" class="new badge green" data-badge-caption="">{{ lang.ui.public }}</span>
+                <span *ngIf="isManager">- {{ playlist.UserId }}</span>
+              </div>
+              <p *ngIf="playlist.Collection && playlist.Collection.length>0 && !songlists[playlist.Id]"><a class="link" (click)="get(playlist)">{{ lang.ui.view_songlist }}</a></p>
+              <div class="song-list" *ngIf="songlists[playlist.Id]">
+                <p *ngFor="let song of songlists[playlist.Id]">
+                  <a  class="link">{{ song.Name }}</a>
+                </p>
+              </div>
+              <a class="link secondary-content waves-effect"
+                (click)="delete(playlist)"
+              ><i class="material-icons red-text">delete</i></a>
+            </li>
+          </ul>
+        <h5 class="center" *ngIf="!playlists">{{ lang.ui.no_playlist_found }}</h5>
+    </div>
+  </div>
+</div>
+
+<app-delete-playlist (onDeleted)="onDeleted($event)"></app-delete-playlist>

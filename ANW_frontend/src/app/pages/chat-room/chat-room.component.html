@@ -1,0 +1,67 @@
+
+  <app-nav></app-nav>
+  <div id="chat-background" class="row">
+    <div [r-img]="ImagePath" style="transform: scale(1.2)"></div>
+  </div>
+  <div class="row blocker">
+    <div class="col m4 l4 xl3 hide-on-small-and-down light-bg" style="height: 100%; display:block; position: relative;">
+        <div class="collection with-header">
+            <div class="collection-header">
+              <h6>{{ lang.ui.roomlist }}
+                  <a class="btn-floating z-depth-0 transparent waves-effect waves-light" *ngIf="isAdmin" (click)="addingModal.open()"><i class="material-icons">add</i></a>
+                  <a class="btn-floating z-depth-0 transparent waves-effect waves-light"><i class="material-icons">search</i></a>
+              </h6>
+            </div>
+            <a class="collection-item waves-effect" *ngFor="let room of roomList" [class.active]="room.Id==currentRoom?.Id"
+              (click)="joinRoom(room)"
+              >
+              <i class="material-icons left" *ngIf="room.Icon">{{ room.Icon }}</i>
+              {{ room.Name }}
+              
+            </a>
+          </div>
+    </div>
+    <div class="col s12 m8 l8 xl9" style="height: 100%; display:block; padding-right: 55px ;">
+      <div class="row light-bg" style="height: 100%; display: flex; flex-direction: column;">
+        <div id="chat-box" class="col s12" style="margin-top: auto; margin-bottom: auto; height: 100%;  overflow-y: auto;">
+          <div class="col s12 center-align" *ngIf="!currentRoom">
+            <br>
+            <h5 style="color: white">{{ lang.ui.notinroom }}</h5> 
+          </div>
+          <div *ngIf="currentRoom">
+            <div class="user-chat" *ngFor="let chat of currentRoom.ChatLog" [class.self]="isSelf(chat.UserId)">
+              <div class="avatar" *ngIf="!isSelf(chat.UserId) && !chat.Message">
+                <div [r-img]="getAvatar(chat.UserId)"></div>
+              </div>
+              <div class="time-info" *ngIf="!chat.Message">
+                <span class="blue-text">{{ !isSelf(chat.UserId )?userData[chat.UserId]?.DisplayName:'' }}</span>
+                {{ !isSelf(chat.UserId) && userData[chat.UserId]?',':'' }}
+                {{ chat.UpdatedOn | date:'dd-MMM-yyyy HH:mm' }}
+              </div>
+              <div class="content-chat-container" *ngFor="let content of chat.Content" [@chatContent] title="{{ content.CreatedOn | date:'HH:mm' }}">
+                <p class="chat-content" [class.not-send]="content.NotSend" [innerHTML]="content.Content">
+                </p>
+              </div>
+              <div class="row event-info center-align" *ngIf="chat.Message" [innerHTML]="chat.Message">
+              </div>
+            </div>
+            <div class="time-info right-align" *ngIf="sentDate && sent">
+                {{lang.ui.sent}} ({{ sentDate | date:'dd-MM-yyyy HH:mm' }})
+            </div>
+          </div>
+        </div>
+        <div class="col s12" style="height: 190px; position: relative; bottom: 0; align-self: flex-end; vertical-align: middle; overflow-y: auto; padding-top: 20px">
+          <form class="row">
+            <div class="col s8 m9 l10 xl11">
+              <textarea class="materialize-textarea white" style="padding-left: 30px;" [(ngModel)]="chatContext" (keydown)="keyUp($event)" name="chat-input" maxlength="300" [disabled]="!currentRoom"></textarea>
+            </div>
+            <div class="col s4 m3 l2 xl1">
+              <button type="submit" class="btn-large btn-floating green waves-effect"  [disabled]="!currentRoom || !realChatContent || stateDisconnected"><i class="material-icons">send</i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-add-chat-room></app-add-chat-room>

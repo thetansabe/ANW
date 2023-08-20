@@ -1,0 +1,17 @@
+[hidden]{
+    display: none!important;
+}
+
+.btn-floating{
+    margin: 2px;
+}
+.pagination li.active{
+    background-color: dodgerblue;
+}
+
+table{
+    border-radius: 1px;
+}
+tr td, tr th{
+    padding-left: 10px;
+}

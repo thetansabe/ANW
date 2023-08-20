@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row" [@transition]>
+      <div class="col s12 center-align">
+          <h5>{{ lang.ui.albummanage }}</h5>
+      </div>
+      <div class="row" *mobxAutorun>
+          <div class="col s12 m9 l7 xl6">
+              <form [formGroup]="filterForm">
+                <div class="col s12 input-field">
+                    <i class="prefix material-icons">search</i>
+                    <input id="album-filter" type="text" formContromName="filterInput">
+                    <label for="album-filter">{{ lang.ui.search }}</label>
+                </div>
+              </form>
+          </div>
+          <div class="s12 m12 l5 xl6 right-align">
+              <a routerLink="create" class="btn btn-large btn-rounded bg-green-to-light waves-effect">
+                  <i class="material-icons left">add</i>
+                  {{ lang.ui.new }}
+              </a>
+          </div>
+      </div>
+      <div class="col s12"  *mobxAutorun>
+            <table class="highlight white" *ngIf="list && list.length">
+              <thead>
+                <tr>
+                  <th>
+                    <label>
+                      <input type="checkbox" [checked]="isCheckedAll" (click)="toggleChecked()" />
+                      <span></span>
+                    </label>
+                  </th>
+                    <th>{{ lang.ui.album }}</th>
+                    <th class="hide-on-med-and-down">{{ lang.ui.uploadedon }}</th>
+                    <th>{{ lang.ui.artist }}</th>
+                    <th>{{ lang.ui.action }}</th>
+                </tr>
+              </thead>
+        
+              <tbody>
+                <tr class="lighten-5" *ngFor="let item of list; let i = index" [ngClass]="{'blue': selected[i]}">
+                  <td>
+                    <label>
+                      <input type="checkbox" class="filled-in" [(ngModel)]="selected[i]" />
+                      <span></span>
+                    </label>
+                  </td>
+                  <td (click)="edit(item)" class="link" [title]="lang.ui.edit">
+                    <a [routerLink]="[ '.' ]" style="margin-right: 10px; color: black;">{{ item.Name }}</a>
+                  </td>
+                  <td  (click)="edit(item)" class="hide-on-med-and-down link">{{ item.CreatedOn | date:'dd/MM/yyyy' }}</td>
+                  <td>
+                      <a class="link" *ngFor="let artist of item.ArtistList; let idx=index">{{ idx>=1?",":""}}{{ artist.Name }}</a>
+                  </td>
+                  <td>
+                    <a class="btn-floating waves-effect waves-light green" (click)="edit(item)"><i class="material-icons">edit</i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+      <div class="col s12 right-align"  *mobxAutorun>
+          <br>
+        <button *ngIf="list && list.length" [disabled]="isLoading || !list || !hasChecked" type="button" (click)="openDeleteModal()" class="btn btn-large btn-rounded bg-red-to-light waves-effect"><i class="material-icons left">delete_sweep</i>{{ lang.ui.delete }}</button>
+      </div>
+      <div class="col s12 center-align"  *mobxAutorun>
+            <ul class="pagination" *ngIf="maxPage>1">
+                <li [class.disabled]="currentPage==1" [class.waves-effect]="currentPage!=1"><a routerLink="." [queryParams]="backpage"><i class="material-icons">chevron_left</i></a></li>
+                <li *ngFor="let p of pages" [class.active]="p==currentPage" [class.waves-effect]="p!=currentPage"><a routerLink="." [queryParams]="goto(p)">{{ p }}</a></li>
+                <li [class.disabled]="currentPage==maxPage" [class.waves-effect]="currentPage!=maxPage"><a routerLink="." [queryParams]="nextpage"><i class="material-icons">chevron_right</i></a></li>
+            </ul> 
+      </div>
+  </div>
+</div>
+
+<app-delete-album (onDeleted)="onDeleted($event)"></app-delete-album>
+<app-edit-album></app-edit-album>

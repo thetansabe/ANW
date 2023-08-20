@@ -1,0 +1,99 @@
+<div class="row" style="margin-bottom: 0px">
+    <div class="col s12 m12 l7 xl8">
+        <div class="col s12 hide-on-small-only">
+            <canvas id="amnhac-chart" class="gradient-color" [chartjs]
+                chart-title=""
+                [chartinfo-hide]="true"
+                chartinfo-position="right"
+                [chart-scale]="scaling" 
+                [chart-xlabel]="lang.ui.songview"
+                [chart-min]="0"
+                [chart-max]="50"
+                chart-font-color="white"
+                chart-line-color="white"
+                chart-grid-color="rgb(255,255,255)">
+            </canvas>
+            <br>
+        </div>
+        <div class="col s12 show-on-small">
+
+        </div>
+        <div class="col s12" *mobxAutorun>
+            <ul id="tabs-swipe-demo" class="tabs tabs-fixed-width" [materialize-tabs]="false">
+                <li class="tab"><a href="#vn-rank" class="waves-effect">VIETNAM</a></li>
+                <li class="tab"><a href="#kr-rank" class="waves-effect">KPOP</a></li>
+                <li class="tab"><a href="#world-rank" class="waves-effect">World</a></li>
+            </ul>
+            <div id="vn-rank" class="col s12 white">
+                <div class="songlist-container">
+                    <div class="songlist-item" *ngFor="let song of songList; let i=index">
+                        <div class="item-icon">
+                            <div class="btn-animation transient scale-transition waves-effect" [class.scale-out]="player.isThatSong(song) && player.findIndex(song)>=0" [ngClass]="rankColor[i]" (click)="player.playSong(song)">
+                                <span>{{ (i+1) }}</span>
+                            </div>
+                            <div class="btn-animation ani-grey transient scale-transition waves-effect scale-out" [class.scale-in]="!player.isPlaying && player.findIndex(song)>=0 && player.isThatSong(song)"  (click)="player.playSong(song)">
+                                <i class="material-icons medium">play_arrow</i>
+                            </div>
+                            <div class="btn-animation ani-red transient scale-transition waves-effect scale-out" [ngClass]="{'scale-in pulse':player.isPlaying && player.isThatSong(song)}" (click)="player.pause()">
+                                <i class="material-icons medium">pause</i>
+                            </div>
+                        </div>
+                        <div class="item-content" style="overflow-x: hidden;">
+                            <a [routerLink]="['/songs/detail', song.Id]" style="white-space: nowrap"><b>{{ song.Name }}</b></a>
+                            <span class="new badge orange" data-badge-caption="">{{ song.View +' '+lang.ui.songview}}</span>
+                            <br>
+                            <p *ngIf="song.ArtistList">
+                                <span class="small-text" *ngFor="let artist of song.ArtistList; let i=index">
+                                    {{ i>0?',':''}}{{ artist.Name }}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="item-button right-align hide-on-small">
+                            <a class="btn-flat circle waves-effect" *ngIf="player.findIndex(song)<0" [materialize-tooltip]="lang.ui.addtoplaylist" (click)="player.addToPlaylist(song,true)" [@button]><i class="material-icons green-text">playlist_add</i></a>
+                            <a class="btn-flat circle waves-effect" *ngIf="player.findIndex(song)>=0" [materialize-tooltip]="lang.ui.removefromplaylist" (click)="player.removeSong(song)" [@button]><i class="material-icons red-text">queue_music</i></a>
+                            <button type="button" *ngIf="isLoggedIn" [disabled]="isRequesting" class="btn-flat circle waves-effect" [materialize-tooltip]="lang.ui.favorite" tooltip-position="top" (click)="favorite(song)">
+                                <i class="material-icons" [class.pink-text]="isFavorited(song)" [class.grey-text]="!isFavorited(song)">favorite</i>
+                            </button>
+                            <a class="btn-flat circle waves-effect" [class.disabled]="isDownloading" *ngIf="song.Approved<3" [materialize-tooltip]="lang.ui.download" (click)="download(song)"><i class="material-icons">save_alt</i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="kr-rank" class="col white s12" style="min-height: 200px"></div>
+            <div id="world-rank" class="col white s12" style="min-height: 200px"></div>
+        </div>
+    </div>
+    <div class="col l5 xl4 hide-on-med-and-down" style="padding-left: 20px;"  *mobxAutorun>
+        <div *ngIf="songTypes">
+            <ul class="collapsible side-menu" [materialize-collapsible]="true">
+                <li *ngFor="let songType of songTypes" class="waves-effect waves-block white">
+                  <div class="collapsible-header transparent">{{ songType.Text }}
+                  </div>
+                  <div class="collapsible-body">
+                    <div class="collection no-border">
+                        <a *ngFor="let type of songType.SubType" class="collection-item waves-effect  transparent">
+                            {{ type.Text }}
+                        </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+        </div>
+        <div routerLink="/ranking" class="img-btn-cover waves-effect waves-light right-align">
+            <img r-img="../../../assets/images/btn/btn_ranking.png" r-position="center" [lazy-load]="true">
+            <span>{{ lang.ui.ranking }}</span>
+        </div>
+        <div routerLink="/artist" class="img-btn-cover waves-effect waves-light">
+            <img r-img="../../../assets/images/btn/btn_artists.png" r-position="center" [lazy-load]="true">
+            <span>{{ lang.ui.artist }}</span>
+        </div>
+        <div routerLink="/theme" class="img-btn-cover waves-effect waves-light right-align" >
+            <img r-img="../../../assets/images/btn/btn_theme.png" r-position="center" [lazy-load]="true">
+            <span>{{ lang.ui.theme }}</span>
+        </div>
+        <div routerLink="/chat" class="img-btn-cover waves-effect waves-light">
+            <img r-img="../../../assets/images/btn/btn_mysong.png" r-position="center" [lazy-load]="true">
+            <span>{{ lang.ui.chatroom }}</span>
+        </div>
+    </div>
+</div>

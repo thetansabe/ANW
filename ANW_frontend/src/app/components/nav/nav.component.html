@@ -1,0 +1,49 @@
+<nav class="z-depth-0 transparency" [class.transparency]="!navExpanded" [class.sticky]="navExpanded" #navBar>
+    <div class="row nav-wrapper"  *mobxAutorun>
+      <div class="col s2 hide-on-large-only">
+          <a *ngIf="isAuthenticated" class="dropdown-trigger link" materialize-dropdown [dropdown-hover]="false" data-target="account-menu-mobile"><i class="material-icons">menu</i></a>
+          <a *ngIf="!isAuthenticated" class="link" routerLink="/login"><i class="material-icons">account_circle</i></a>
+      </div>
+      <div class="col s2 show-on-large hide-on-med-and-down"></div>
+          <form [formGroup]="searchForm" (submit)="onSearchPost()">
+            <div class="input-field col s10 m8 l4 min-width-300px">
+              <input id="search" type="search" formControlName="searchInput" placeholder="{{ lang.ui.searchguide }}"
+                required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+            <ul id="nav-mobile" class="right hide-on-med-and-down col l6 right-align">
+                <li routerLink="/songs" routerLinkActive="active"><a><i class="material-icons left">music_note</i> {{ lang.ui.listen }}</a></li>
+                <li><a><i class="material-icons left">public</i>{{ lang.ui.news }}</a></li>
+                <li><a routerLink="/videos"><i class="material-icons left">music_video</i>{{ lang.ui.videos }}</a></li>
+                <li *ngIf="isAuthenticated"><a class="dropdown-trigger" data-target="account-menu" materialize-dropdown [dropdown-hover]="true"><i class="material-icons left">account_circle</i>
+                  {{ getDisplayname }}
+                  <i class="material-icons right">arrow_drop_down</i>
+                </a></li>
+                <li *ngIf="!isAuthenticated" routerLink="/login"><a><i class="material-icons left">account_circle</i>{{ lang.ui.login }}</a></li>
+              </ul>
+          </form>
+      </div>
+  </nav>
+  
+<!-- Dropdown menu for logged user -->
+<ul id="account-menu" class="dropdown-content blue">
+  <li><a routerLink="/account"><i class="material-icons left">account_circle</i>{{ lang.ui.account }}</a></li>
+  <li><a routerLink="/dashboard"><i class="material-icons left">dashboard</i>{{ lang.ui.dashboard }}</a></li>
+  <!-- <li><a routerLink="/home/banner" [hidden]="!isAdmin()"><i class="material-icons left">burst_mode</i>{{ lang.ui.banneradsmanage }}</a></li> -->
+  <li><a><i class="material-icons left">notifications</i>{{ lang.ui.notification }}
+    <span class="new badge red right border-rad-25" data-badge-caption="">0</span>
+  </a></li>
+  <li><a (click)="logout()"><i class="material-icons left">exit_to_app</i>{{ lang.ui.logout }}</a></li>
+</ul>
+<ul id="account-menu-mobile" class="dropdown-content blue">
+  <li><a routerLink="/"><i class="material-icons left">home</i>{{ lang.ui.home }}</a></li>
+  <li><a routerLink="/news"><i class="material-icons left">public</i>{{ lang.ui.news }}</a></li>
+  <li><a routerLink="/video"><i class="material-icons left">music_video</i>{{ lang.ui.videos }}</a></li>
+  <li><a routerLink="/account"><i class="material-icons left">account_circle</i>{{ lang.ui.account }}</a></li>
+  <li><a routerLink="/dashboard"><i class="material-icons left">dashboard</i>{{ lang.ui.dashboard }}</a></li>
+  <li><a><i class="material-icons left">notifications</i>{{ lang.ui.notification }}
+    <span class="new badge red right border-rad-25" data-badge-caption="">0</span>
+  </a></li>
+  <li><a (click)="logout()"><i class="material-icons left">exit_to_app</i>{{ lang.ui.logout }}</a></li>
+</ul>

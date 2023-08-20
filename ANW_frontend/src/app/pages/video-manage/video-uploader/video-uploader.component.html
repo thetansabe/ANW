@@ -1,0 +1,54 @@
+<div class="modal" materialize-modal>
+  <div class="modal-content">
+    <form [formGroup]="form" (submit)="submit()">
+        <div class="file-field input-field">
+            <div class="btn btn-rounded waves-effect btn-large" [ngClass]="{'red pulse': (form.get('videoFile').invalid && !form.pristine) || (videoFile && !videoFile.type.includes('video/')),'green': form.pristine || (form.get('videoFile').valid && videoFile && videoFile.type.includes('video/'))}">
+              <span><i class="material-icons left">search</i>{{ lang.ui.browse }}</span>
+              <input type="file" accept="video/*" formControlName="videoFile" (change)="setVideoFile($event)">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path" type="text" readonly>
+            </div>
+          </div>
+          
+        <div class="input-field col s10">
+          <input [readonly]='isLoading' id="videoname" type="text" formControlName="name" class="validate" required>
+          <label for="videoname">{{ lang.ui.videoname }}</label>
+          <span class="helper-text red-text" *ngIf="form.get('name').invalid && !form.pristine">{{ lang.ui.songnameisempty }}</span>
+        </div>
+        <div class="input-field col s8">
+          <div class="chips" [materialize-chips]="'+ '+lang.ui.artist"></div>
+        </div>
+        <div class="col s12" [hidden]="!songTypes">
+          <br>
+            <select *ngIf="songTypes && songTypes.length>0" formControlName="type" [materialize-select]="songTypes[0].SubType[0].Id">
+                <optgroup *ngFor="let item of songTypes" label="{{ item.Text }}">
+                    <option *ngFor="let type of item.SubType" value="{{ type.Id }}">{{ type.Text }}</option>
+                </optgroup>
+              </select>
+              <label>{{ lang.ui.songtype }}</label>
+        </div>
+        <div class="col s12 center-align">
+            <br>
+            <button [disabled]="isLoading || form.invalid || (videoFile && !videoFile.type.includes('video/'))" type="submit" class="btn btn-rounded waves-effect waves-light btn-large bg-green-to-light">
+                <div class="left btn-loader" *ngIf="isLoading">
+                    <div class="preloader-wrapper small active">
+                        <div class="spinner-layer spinner-green-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <i class="material-icons left" *ngIf="!isLoading">publish</i>{{ isLoading?lang.ui.requesting:lang.ui.upload }}
+            </button>
+            <a class="btn-rounded btn grey modal-close">{{ lang.ui.close }}</a>            
+            <br>
+          </div>  
+    </form>
+  </div>
+</div>

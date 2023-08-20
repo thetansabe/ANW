@@ -1,0 +1,33 @@
+<div class="modal" materialize-modal>
+  <div class="modal-content center-align row">
+    <h5>{{ lang.ui.newroom }}</h5>
+    <form [formGroup]="form" (submit)="save()">
+        <div class="input-field col s12">
+          <input id="room-name" type="text" class="validate" formControlName="roomName">
+          <label for="room-name" class="active">{{ lang.ui.roomname }}</label>
+        </div>
+        <div class="input-field col s10 m9 l6 xl5">
+            <input id="room-capacity" type="number" class="validate" formControlName="cap" min="0" max="300">
+            <label for="room-capacity" class="active">{{ lang.ui.capacity }}</label>
+        </div>
+        <div class="input-field col s12 m12 l10 xl8">
+            <i class="material-icons">{{ form.get('icon').value }}</i>
+            <select materialize-select="home" formControlName="icon">
+              <option *ngFor="let icon of iconList" [value]="icon.ico">{{ icon.desc }}</option>
+            </select>
+            <label>{{ lang.ui.icon }}</label>
+        </div>
+        <div class="input-field col s12 m12 l10 xl8">
+            <select materialize-select="0" formControlName="publicity">
+              <option value="0">{{ lang.ui.private }}</option>
+              <option value="1">{{ lang.ui.public }}</option>
+            </select>
+            <label>{{ lang.ui.publicity }}</label>
+        </div>
+        <div class="col s12 center-align">
+          <button type="submit" [disabled]="isLoading || form.invalid" class="btn btn-rounded green">{{ lang.ui.create }}</button>
+          <a class="btn btn-rounded grey waves-effect modal-close">{{ lang.ui.close }}</a>
+        </div>
+    </form>
+  </div>
+</div>

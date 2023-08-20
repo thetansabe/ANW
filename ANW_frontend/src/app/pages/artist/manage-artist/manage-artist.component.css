@@ -1,0 +1,7 @@
+.item-container{
+    padding: 5px 10px;
+}
+
+.pagination li.active{
+    background-color: dodgerblue;
+}

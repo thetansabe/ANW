@@ -1,0 +1,13 @@
+<div class="modal" [materialize-modal]="true">
+  <div class="modal-content center-align" *mobxAutorun>
+    <h5>{{ lang.ui.generaldeletewarn }}</h5>
+    <div class="chip" *ngFor="let alb of list">
+      {{ alb.Name }}
+      <i class="close material-icons" (click)="remove(alb)">close</i>
+    </div>
+    <div class="row">
+      <button [disabled]="isLoading || !list" class="btn btn-rounded red waves-effect">{{ lang.ui.delete }}</button>
+      <a class="btn btn-rounded grey waves-effect modal-close">{{ lang.ui.cancel }}</a>
+    </div>
+  </div>
+</div>

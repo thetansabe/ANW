@@ -1,0 +1,9 @@
+<div class="warn-board row" *ngIf="!hidden" [@transition]>
+  <div class="col s12">
+    {{ lang.ui.cookie_policy }}  
+    <b><a class="link">&lsaquo;{{ lang.ui.privacypolicy }}&rsaquo;</a></b>
+  </div>
+  <div class="col s12 right-align">
+    <a class="btn-flat waves-effect white-text" (click)="hide()">{{ lang.ui.understood }}</a>
+  </div>
+</div>

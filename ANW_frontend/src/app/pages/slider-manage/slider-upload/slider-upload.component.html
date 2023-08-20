@@ -1,0 +1,82 @@
+<div class="container" [@transition]>
+    <br>
+    <div id="slider-uploader" class="row white">
+      <div class="col s12">
+        <a class="btn grey btn-rounded" routerLink=".."><i class="material-icons left">arrow_back_ios</i>{{ lang.ui.back }}</a>
+      </div>
+      <div class="col s12">
+        <h5>{{ lang.ui.newbanner }}</h5>
+        <br>
+      </div>
+      <div class="col s12">
+        <div class="col s1">
+        </div>
+        <div class="col s10 white">
+          <form [formGroup]="form" (submit)="upload()">
+              <div class="file-field input-field">
+                  <div class="btn btn-rounded waves-effect btn-large" [ngClass]="{'red pulse':form.get('file').invalid && !form.pristine,'green': form.pristine || form.get('file').valid}">
+                    <span><i class="material-icons left">search</i>{{ lang.ui.browse }}</span>
+                    <input type="file" accept="image/*" formControlName="file" (change)="setFile($event)">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path" type="text" readonly>
+                  </div>
+                </div>
+              <div class="input-field col s10">
+                <input [readonly]='isUploading' id="slider-title" type="text" formControlName="title" class="validate" required>
+                <label for="slider-title">{{ lang.ui.title }}</label>
+                <span class="helper-text red-text left-align" *ngIf="form.get('title').invalid && !form.pristine">{{ lang.ui.noemptyallow }}</span>
+              </div>
+              <div class="input-field col s10">
+                <textarea [readonly]='isUploading' id="slider-desc" formControlName="desc" class="materialize-textarea" required></textarea>
+                <label for="slider-desc">{{ lang.ui.description }}</label>
+              </div>
+              <div class="input-field col s10">
+                <input [readonly]='isUploading' id="slider-href" type="text" formControlName="href" class="validate">
+                <label for="slider-title">{{ lang.ui.href }}</label>
+              </div>
+              <div class="col s6" *ngIf="alignment" >
+                <br>
+                  <select formControlName="align" [materialize-select]="form.get('align').value">
+                    <option *ngFor="let type of alignment; let i=index" value="{{ type }}">{{ alignmentText[i] }}</option>
+                  </select>
+                  <label>{{ lang.ui.alignment }}</label>
+              </div>
+              <div class="col s12">
+                <br>
+                <div class="col s6 input-field">
+                  <input #validFrom type="text" id="valid-from" [placeholder]="lang.ui.pickaday" class="datepicker" materialize-datepicker datepicker-format="dd/mm/yyyy" [datepicker-default]="now" [datepicker-localization]="i18n">
+                  <label for="valid-from">{{ lang.ui.validfrom }}</label>
+                </div>
+                <div class="col s6 input-field">
+                  <input #validTo type="text" id="valid-to" [placeholder]="lang.ui.pickaday" class="datepicker" materialize-datepicker datepicker-format="dd/mm/yyyy" [datepicker-default]="now" [datepicker-localization]="i18n">
+                  <label for="valid-to">{{ lang.ui.validto }}</label>
+                </div>
+              </div>
+              <div class="col s12 center-align">
+                <br>
+                <button [disabled]="compareDate() || isUploading || form.invalid" type="submit" class="btn btn-rounded waves-effect waves-light btn-large bg-green-to-light">
+                    <div class="left btn-loader" *ngIf="isUploading">
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-green-only">
+                              <div class="circle-clipper left">
+                                <div class="circle"></div>
+                              </div><div class="gap-patch">
+                                <div class="circle"></div>
+                              </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <i class="material-icons left" *ngIf="!isUploading">publish</i>{{ isUploading?lang.ui.requesting:lang.ui.upload }}
+                </button>
+                <br>
+                <br>
+              </div>
+          </form>
+        </div>
+        <div class="col s1"></div>
+      </div>
+    </div>
+  </div>

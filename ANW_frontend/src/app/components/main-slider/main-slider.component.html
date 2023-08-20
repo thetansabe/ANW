@@ -1,0 +1,19 @@
+
+<div class="slider" materialize-slider [slider-height]="320" >
+  <ul class="slides">
+    <li *ngIf="!sliders || sliders.length==0">
+      <img src="../../../assets/images/bg.jpg">
+      <div class="caption center-align">
+          <h3> </h3>
+          <h5 class="light grey-text text-lighten-3"> </h5>
+        </div>
+      </li>
+    <li *ngFor="let item of sliders">
+      <img [src]="getUrl(item.Path)"> 
+      <div class="caption" [ngClass]="item.Alignment">
+        <h3>{{ item.Title }}</h3>
+        <h5 class="light grey-text text-lighten-3">{{ item.Desc }}</h5>
+      </div>
+    </li>
+  </ul>
+</div>

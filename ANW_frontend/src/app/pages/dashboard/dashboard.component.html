@@ -1,0 +1,14 @@
+<img id="background" src="../../../assets//images/bg.jpg">
+<br>
+<div class="container" [@transition] *mobxAutorun>
+  <h4>{{ lang.ui.dashboard }}</h4>
+  <br>
+  <!-- Dashboard Item -->
+  <div *ngFor="let item of displayList" [routerLink]="item.route?item.route:'.'" class="dashboard-item waves-effect">
+    <div class="item-icon">
+      <a class="btn-animation large ani-grey"><i class="material-icons medium">{{ item.icon }}</i></a>
+    </div>
+    <div class="item-title">{{ item.title }}</div>
+    <div class="item-desc"><span>{{ item.desc }}</span></div>
+  </div>
+</div>

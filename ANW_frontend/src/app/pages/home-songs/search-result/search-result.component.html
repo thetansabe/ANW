@@ -1,0 +1,52 @@
+<div class="row" *mobxAutorun>
+  <div class="col s7 m8 l8">
+      <div class="progress" *ngIf="isLoading">
+          <div class="indeterminate blue"></div>
+      </div>
+      <div class="col s12" *ngIf="!isLoading && responseMs">
+        <h5 [innerHTML]="lang.ui.searchresult"></h5>
+      </div>
+      <div class="col s12" *ngIf="!isLoading && responseMs">
+        <span class="grey-text" [innerHTML]="lang.ui.searchresult_ms+' '+responseMs+' '+lang.ui.second.toLowerCase()"></span>
+      </div>
+    <ul class="collection">
+      <li class="collection-item avatar" *ngFor="let song of songList">
+        <i *ngIf="!player.isThatSong(song) || player.findIndex(song)<0 || (player.isThatSong(song) && !player.isPlaying)" (click)="player.playSong(song)" class="material-icons circle waves-effect" [class.green]="!player.isThatSong(song)" [@button]>play_arrow</i>
+        <i *ngIf="player.isPlaying && player.isThatSong(song)" (click)="player.pause()" class="material-icons circle waves-effect red" [@button]>pause</i>
+        <span class="title">{{ song.Name }}</span>
+        <p *ngIf="song.ArtistList">
+          <span *ngFor="let artist of song.ArtistList; let i=index" [innerHTML]="i>0?', ':''+artist.Name">
+          </span>
+        </p>
+      </li>
+    </ul>
+  </div>
+  <div class="col s5 m4 l4">
+    <div class="col s12" *ngIf="!isLoading && responseMs">
+      <h5 [innerHTML]="lang.ui.relevant"></h5>
+      <h6 *ngIf="(!albumList && !artistList) || (albumList.length==0 && artistList.length==0)">
+        {{ lang.ui.noresult }}
+      </h6>
+    </div>
+    <div class="col s12" *ngIf="albumList && albumList.length>0">
+      <h6 [innerHTML]="lang.ui.album"></h6>
+      <ul class="collection">
+        <li class="collection-item avatar" *ngFor="let album of albumList">
+          <img *ngIf="album.AvatarImg" [src]="resolveResource(album.AvatarImg)" alt="" class="circle">
+          <i *ngIf="!album.AvatarImg" class="material-icons">album</i>
+          <span class="title">{{ album.Name }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col s12" *ngIf="artistList && artistList.length>0">
+      <h6 [innerHTML]="lang.ui.artist"></h6>
+      <ul class="collection">
+        <li class="collection-item avatar" *ngFor="let artist of artistList">
+          <img *ngIf="artist.AvatarImg" [src]="resolveResource(artist.AvatarImg,true)" alt="" class="circle">
+          <i *ngIf="!artist.AvatarImg" class="material-icons orange">star</i>
+          <span class="title">{{ artist.Name }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

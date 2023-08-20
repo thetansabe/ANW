@@ -1,0 +1,11 @@
+<div id="reset-playlist-modal" class="modal" [materialize-modal]="true">
+  <div class="modal-content">
+    <h4>{{ lang.ui.reset_playlist }}</h4>
+    <h6>{{ lang.ui.reset_playlist_prompt }}</h6>
+    <br>
+    <div class="col s12 center-align">
+      <button class="btn btn-rounded red waves-effect" (click)="reset()">{{ lang.ui.confirm }}</button>
+      <a class="btn btn-rounded gray waves-effect modal-close">{{ lang.ui.cancel }}</a>
+    </div>
+  </div>
+</div>

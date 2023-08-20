@@ -1,0 +1,12 @@
+.cover-title{
+    background: white;
+    margin-bottom: 25px;
+    padding: 12px 5px 12px 5px;
+    border-radius: 0px 0px 25px 25px;
+    font-size: 1.6em;
+    user-select: none;
+}
+.parallax-container{
+    height: 300px;
+    z-index: 50;
+}

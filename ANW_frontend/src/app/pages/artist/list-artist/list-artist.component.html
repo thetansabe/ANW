@@ -1,0 +1,43 @@
+<div class="item-container">
+  <div class="row">
+    <div class="col s12 center-align">
+      <ul class="pagination" *ngIf="alphabets" [@alphabetcard]>
+        <li *ngFor="let alp of alphabets" [class.active]="(!startsWith && alp.length!=1) || alp==startsWith" [class.waves-effect]="!startsWith || alp!=startsWith"><a class="link" (click)="setAlphabet(alp)">{{ alp }}</a></li>
+      </ul>
+      <div class="progress" *ngIf="isLoading">
+        <div class="indeterminate blue"></div>
+      </div>
+    </div>
+    <div class="col s12" *ngIf="list" [@transition]="list">
+      <div class="card sticky-action" *ngFor="let item of list">
+        <div class="card-image waves-effect waves-block waves-light">
+          <img class="activator" [src]="(item.AvatarImg)? url + item.AvatarImg : '../../../../assets/images/bg.jpg'">
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">{{ item.Name }}</span>
+        </div>
+        <div class="card-action">
+          <a [routerLink]="['/artist/detail', item.Id]">{{ lang.ui.viewdetail }}</a>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">{{ item.Name }}<i class="material-icons right">close</i></span>
+          <p>{{ item.Desc }}</p>
+          <p *ngIf="item.DateOfBirth && isValidDate(item.DateOfBirth)">{{ lang.ui.dateofbirth }}:{{ item.DateOfBirth | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col s12" *ngIf="pages  && maxPage>1">
+      <ul class="pagination">
+        <li [class.disabled]="page<=1" [class.waves-effect]="page>1">
+          <a [routerLink]="[baseUrl]" [queryParams]="{ page: page<=1?page:page-1 }"><i class="material-icons">chevron_left</i></a>
+        </li>
+        <li *ngFor="let p of pages" [class.active]="page==p" [class.waves-effect]="page!=p">
+          <a [routerLink]="[baseUrl]" [queryParams]="{ page: p }">{{p}}</a>
+        </li>
+        <li [class.disabled]="page>=maxPage" [class.waves-effect]="page<maxPage">
+          <a [routerLink]="[baseUrl]" [queryParams]="{ page: page>=maxPage?page:page+1 }"><i class="material-icons">chevron_right</i></a>
+        </li>
+      </ul>    
+    </div>
+  </div>
+</div>

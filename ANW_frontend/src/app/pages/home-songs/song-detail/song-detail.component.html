@@ -1,0 +1,33 @@
+<div class="row white">
+  <div class="col s12 m7 l8" *mobxAutorun>
+    <div *ngIf="currentSong">
+      <div class="col s12">
+        <h5><b>{{ currentSong.Name }}</b><span *ngIf="currentSong.ArtistList && currentSong.ArtistList.length>0">- 
+            <a *ngFor="let artist of currentSong.ArtistList; let i=index" [routerLink]="['/artist/detail',artist.Id]">{{ i>0?',':''}}{{ artist.Name }}</a>
+          </span></h5>
+        
+      </div>
+        <div class="col s6">
+          {{ lang.ui.duration }}: {{ duration }}
+        </div>
+        <div class="col s6 right right-align">
+          <button type="button" class="btn btn-rounded waves-effect"
+            (click)="player.toggle(currentSong)"
+            [class.green]="player.findIndex(currentSong)<0"
+            [class.grey]="player.findIndex(currentSong)>=0"
+            style="transition: 0.3s ease;">
+              <i class="material-icons left absolute" *ngIf="!player.isPlaying || !player.isThatSong(currentSong)" [@button]>play_arrow</i>
+              <i class="material-icons left absolute" *ngIf="player.isPlaying && player.isThatSong(currentSong)" [@button]>pause</i>
+              <span style="margin-left: 36px;">{{ player.isPlaying && player.isThatSong(currentSong)?lang.ui.pause:lang.ui.play }}</span>
+          </button>
+        <a class="btn-floating waves-effect" *ngIf="isLoggedIn"
+          [class.pink]="isFavorited(currentSong)" [class.grey]="!isFavorited(currentSong)"
+          (click)="favorite(currentSong)"><i class="material-icons">favorite</i></a>
+        </div>
+    </div>
+
+    <!-- Facebook comment -->
+    <div class="fb-comments" [attr.data-href]="currentUrl" data-numposts="10"></div>
+  </div>
+  <div class="col m5 l4 hide-on-small-and-down"></div>
+</div>

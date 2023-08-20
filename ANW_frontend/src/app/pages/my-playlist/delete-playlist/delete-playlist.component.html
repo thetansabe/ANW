@@ -1,0 +1,15 @@
+<div id="delete-playlist" class="modal" materialize-modal>
+  <div class="modal-content">
+    <div class="center-align" *ngIf="playlist">
+      <h4>{{ lang.ui.generaldeletewarn }}</h4>
+      <h6>{{ playlist.Name }} - {{ playlist.CreatedOn | date:"dd-MM-yyyy"}}</h6>
+      <br><br>
+      <button type="button" [disabled]="isLoading" (click)="delete()" class="btn-rounded btn red waves-effect">
+        {{ lang.ui.delete }}
+      </button>
+      <a class="btn btn-rounded grey modal-close">
+        {{ lang.ui.cancel }}
+      </a>
+    </div>
+  </div>
+</div>

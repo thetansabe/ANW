@@ -1,0 +1,153 @@
+<!-- Modals -->
+<app-create-playlist></app-create-playlist>
+<app-open-playlist></app-open-playlist>
+<app-reset-playlist></app-reset-playlist>
+
+<!-- Floating menu -->
+<div *mobxAutorun class="fixed-action-btn" materialize-fab="top" [materialize-tooltip]="lang.ui.musicplayer" tooltip-position="left" tooltip-margin="30">
+    <a class="btn-floating btn-large waves-effect" [class.pulse]="player.isPlaying" [class.blue]="!player.isPlaying" [class.red]="player.isPlaying" (dblclick)="togglePlaying()">
+      <i class="large material-icons" *ngIf="player.isPlaying" [@fabbutton]>pause</i>
+      <i class="large material-icons" *ngIf="!player.isPlaying" [@fabbutton]>play_arrow</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red waves-effect" routerLink="/songs" routerLinkActive="disabled"><i class="material-icons">home</i></a></li>
+      <li><a class="btn-floating amber waves-effect" routerLink="/dashboard" routerLinkActive="disabled"><i class="material-icons">dashboard</i></a></li>
+      <li><a class="btn-floating green waves-effect" (click)="showPlayer()" [materialize-tooltip]="lang.ui.playlist" tooltip-position="left"><i class="material-icons">playlist_play</i></a></li>
+    </ul>
+  </div>
+
+<!-- Music player -->
+<div *mobxAutorun id="music-player" [class.show]="playerToggle" class="music-player z-depth-2" [ngStyle]="{'height.px': player_height,'background':player_background, 'opacity': (opacity_range/10)}">
+  <div class="row">
+    <div class="col s10">
+      <h6>
+        <span *ngIf="!player.currentPlaylist">{{ lang.ui.playlist }}</span>
+        <span *ngIf="player.currentPlaylist" class="blue-text">[{{ player.currentPlaylist.Name }}]</span>
+        <a class="btn-floating margin-btn waves-effect waves-light purple modal-trigger" data-target="create-playlist-modal" *ngIf="isLoggedIn && player.playlist.length>0" [materialize-tooltip]="lang.ui.create"><i class="material-icons">add</i></a>
+        <a class="btn-floating margin-btn waves-effect waves-light blue" *ngIf="isLoggedIn" (click)="modal.open()" [materialize-tooltip]="lang.ui.open_playlist"><i class="material-icons">search</i></a>
+        <button class="btn-floating margin-btn waves-effect waves-light green" *ngIf="isLoggedIn && player.currentPlaylist && player.currentPlaylist.UserId==userId && player.playlist.length>0" [disabled]="!player.isAltered || isRequesting" (click)="save()" [materialize-tooltip]="lang.ui.save"><i class="material-icons">check</i></button>
+        <a class="btn-floating margin-btn waves-effect waves-light red" (click)="openReset()"  *ngIf="player.playlist.length>0 || player.currentPlaylist" [materialize-tooltip]="lang.ui.reset"><i class="material-icons">refresh</i></a>
+      </h6>
+    </div>
+    <div class="col s2">
+      <a (click)="hidePlayer()" class="right link black-text"><i class="material-icons">close</i></a>
+      <a class="right link modal-trigger" data-target="musicplayer-settings"><i class="material-icons green-text text-darken-2">settings</i></a>
+    </div>
+    <div class="col s12">
+      <div class="col s6 m6 l6 xl4 hide-on-small-and-down">
+        <div class="row">
+          <!-- Album Cover -->
+          <div class="col s12 center-align relative album-container" *ngIf="playerToggle">
+            <div id="album-cover" class="scale-transition" [class.playing]="player.playlist && player.playlist.length>0">
+            </div>
+            <a class="play-button btn-flat btn-large waves-effect scale-transition" *ngIf="player.playlist && player.currentSong.getValue()" (click)="player.play()" [class.scale-out]="player.isPlaying"><i class="large material-icons white-text">play_arrow</i></a>
+            <a class="play-button btn-flat btn-large waves-effect scale-transition" *ngIf="player.playlist && player.currentSong.getValue()" (click)="player.pause()" [class.scale-out]="!player.isPlaying" [class.button-popping]="player.isPlaying"><i class="large material-icons red-text text-lighten-4">pause</i></a>
+          </div>
+          <!-- Other settings -->
+          <div class="col s4">
+            <a class="btn-flat waves-effect right" (click)="player.toggleMute()" [class.red-text]="player.isMute"><i class="material-icons">{{ player.isMute?'volume_mute':'volume_up'}}</i></a>
+          </div>
+          <div class="col s6">
+              <div class="range-field max-width-200px">
+                <input type="range" [(ngModel)]="volume" (change)="onVolumeChanged()" min="0" max="100" />
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6 l6 xl8" *ngIf="playerToggle">
+          <ul class="collection">
+              <li class="collection-item" *ngFor="let item of player.playlist" [class.background-transition]="player.isPlaying && player.isThatSong(item)" [@playlistItem]>
+                <div class="no-overflow">
+                  <a [routerLink]="['/songs/detail', item.Id]" [class.red-text]="player.isThatSong(item)" >{{item.Name}}</a>
+                  <a class="secondary-content waves-effect" (click)="player.removeSong(item)"><i class="material-icons black-text">close</i></a>  
+                  <a class="secondary-content waves-effect" *ngIf="!player.isPlaying || !(player.isThatSong(item))" (click)="player.playSong(item)"><i class="material-icons blue-text">play_arrow</i></a>
+                  <a class="secondary-content waves-effect" *ngIf="player.isPlaying && player.isThatSong(item)" (click)="player.pause()"><i class="material-icons red-text">pause</i></a>
+                </div>
+              </li>
+            </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay" (click)="hidePlayer()"></div>
+
+<!-- Music Progress -->
+<div #timetip id="time-tip" [class.show]="timeEst.isHovering">{{ timeEst.gotoDuration }}</div>
+<div *mobxAutorun class="music-duration-bar" (mouseenter)="onEnter($event)" (mousemove)="onHover($event)" (mouseleave)="onLeave()" [ngStyle]="{'bottom.px': playerToggle?player_height:0}" (click)="seek($event)">
+  <div class="music-duration-box">
+    <span class="music-duration-buffered" [ngStyle]="{'width': (player.buffered*100/player.duration)+'%'}"></span>
+    <span class="music-duration-loaded" [ngStyle]="{'width': (player.currentTime*100/player.duration)+'%'}"></span>
+  </div>
+</div>
+
+<!-- Music Floating Info -->
+<div *mobxAutorun class="music-info" [class.show]="currentSong && !playerToggle">
+    <div class="left vertical-center" *ngIf="player.isLoading">
+        <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-white-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+    </div>
+  <span id="music-displaytext" [class.animate]="player.isPlaying && !playerToggle" *ngIf="currentSong">{{ currentSong.Name }}</span>
+</div>
+
+<div *mobxAutorun id="musicplayer-settings" class="modal" [materialize-modal]="true">
+  <div class="modal-content center-align">
+    <h4>
+      <i class="material-icons left">album</i>
+      {{ lang.ui.player_settings }}
+    </h4>
+    <br>
+    <div class="row">
+      <div class="col s4">
+        {{ lang.ui.opacity }}
+      </div>
+      <div class="col s8 range-field">
+        <input type="range" [(ngModel)]="opacity_range" min="4" max="10" />
+      </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+          <i class="material-icons left">repeat</i>
+          {{ lang.ui.repeatmode }}
+        </div>
+        <div class="input-field col s6">
+          <select [materialize-select]="repeatMode+''" [(ngModel)]="repeatMode" (change)="onRepeatModeChanged()">
+            <option value="0">{{ lang.ui.never }}</option>
+            <option value="1">{{ lang.ui.timesrepeat }}</option>
+            <option value="2">{{ lang.ui.timerrepeat }}</option>
+          </select>
+          <label></label>
+        </div>
+    </div>
+    <div class="row" *ngIf="repeatMode && repeatMode==1">
+        <div class="col s8 right-align">
+          <i class="material-icons left">slow_motion_video</i>
+          {{ lang.ui.repeatuntil }}
+        </div>
+        <div class="input-field col s4">
+            <input id="times-count" type="number" [(ngModel)]="player.repeatTime" min="0" max="99" name="times-count" class="validate">
+            <label for="times-count" class="active">{{ lang.ui.timescount }}</label>
+        </div>
+    </div>
+    <div class="row" *ngIf="repeatMode && repeatMode==2">
+        <div class="col s8  right-align">
+          <i class="material-icons left">av_timer</i>
+          {{ lang.ui.repeatuntil }}
+          {{ ' '+ lang.ui.playbacktimeover }}
+        </div>
+        <div class="input-field col s4">
+            <input id="times-count" type="number" [(ngModel)]="player.repeatTime" min="0" max="300" class="validate">
+            <label for="times-count" class="active">{{ lang.ui.minute }}</label>
+        </div>
+    </div>
+    <a class="btn btn-rounded grey waves-effect modal-close">{{ lang.ui.close }}</a>
+  </div>
+</div>

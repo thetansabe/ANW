@@ -1,0 +1,75 @@
+<div class="row container">
+  <div class="col s12 center-align">
+    <h5>{{ lang.ui.artistmanage }}</h5>
+    <br>
+  </div>
+  <div class="col s10 m8 l7 xl5"  *mobxAutorun>
+      <form [formGroup]="filterForm">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">search</i>
+            <input id="icon_prefix" type="text" formControlName="filterInput" class="validate">
+            <label for="icon_prefix">{{ lang.ui.findartist }}</label>
+          </div>
+          <div class="col s12">
+            <div class="progress" *ngIf="isLoading">
+              <div class="indeterminate blue"></div>
+            </div>
+          </div>
+        </form>
+  </div>
+  <div class="col s12 m4 l5 xl7 right-align" *mobxAutorun>
+    <button class="btn btn-large bg-red-to-light waves-effect waves-light btn-rounded" [disabled]="!hasChecked" (click)="delete()">
+      <i class="material-icons left">delete_sweep</i>
+      {{ lang.ui.delete }}
+    </button>
+  </div>
+  <div class="col s12" *mobxAutorun>
+      <table class="striped" *ngIf="artists">
+          <thead>
+            <tr>
+              <th>
+                  <label>
+                    <input (change)="onSelectChanged()"  type="checkbox" class="filled-in" [checked]="isCheckedAll" />
+                    <span></span>
+                  </label>
+              </th>
+              <th>{{ lang.ui.artist }}</th>
+              <th class="hide-on-small">{{ lang.ui.country }}</th>
+              <th>{{ lang.ui.action }}</th>
+            </tr>
+          </thead>
+  
+          <tbody [@listanimation]="artists.length">
+            <tr *ngFor="let artist of artists; let i=index">
+              <td>
+                <label>
+                  <input [(ngModel)]="selected[i]" type="checkbox" class="filled-in" checked="checked" />
+                  <span></span>
+                </label>
+              </td>
+              <td><a [routerLink]="['/artist/detail', artist.Id]">{{ artist.Name }}</a></td>
+              <td class="hide-on-small">{{ artist.CountryName }}</td>
+              <td>
+                <a class="btn btn-floating green waves-effect" (click)="edit(artist)" [materialize-tooltip]="lang.ui.edit"><i class="material-icons">edit</i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+  <div class="col s12" *mobxAutorun>
+      <ul class="pagination" *ngIf="maxPage>1">
+        <li [class.disabled]="page<=1" [class.waves-effect]="page>1">
+          <a [routerLink]="[baseUrl]" [queryParams]="backpage"><i class="material-icons">chevron_left</i></a>
+        </li>
+        <li *ngFor="let p of pages" [class.active]="p==page" [class.waves-effect]="p!=page">
+          <a [routerLink]="[baseUrl]" [queryParams]="goto(p)">{{ p }}</a>
+        </li>
+        <li [class.disabled]="page>=maxPage" [class.waves-effect]="page<maxPage">
+          <a [routerLink]="[baseUrl]" [queryParams]="nextpage"><i class="material-icons">chevron_right</i></a>
+        </li>
+      </ul>
+  </div>
+</div>
+
+<app-edit-artist (onChanged)="onSaveChanges($event)"></app-edit-artist>
+<delete-artist-prompt (onDeleted)="onDeleted($event)"></delete-artist-prompt>

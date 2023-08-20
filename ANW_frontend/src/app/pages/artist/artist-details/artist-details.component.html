@@ -1,0 +1,17 @@
+<app-nav></app-nav>
+<div class="background-container">
+  <img class="img-auto-scale" [r-img]="(artist && artist.BackgroundImg)? url+artist.BackgroundImg :'../../../../assets/images/bg.jpg'" r-position="top">
+</div>
+<div class="row">
+  <div class="col s12">
+    <div class="artist-info" *ngIf="artist">
+      <div class="avatar">
+        <img [r-img]="(artist && artist.AvatarImg)? url+artist.AvatarImg :'../../../../assets/images/icons/empty-user.png'" r-position="center">
+      </div>
+      <div class="text hide-on-small-and-down">
+        <h4>{{ artist.Name }}</h4><br>
+        <h6 class="black-text" *ngIf="artist.CountryName"><b>{{ lang.ui.country }}:</b> {{ artist.CountryName }}</h6>
+      </div>
+    </div>
+  </div>
+</div>

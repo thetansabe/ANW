@@ -1,0 +1,84 @@
+
+nav{
+    transition: all 0.3s ease;
+    z-index: 650;
+    height:52px;
+}
+
+nav.transparency{
+    position: absolute;
+    top:0;
+    background-color:transparent!important;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6),transparent);
+}
+nav.sticky{
+    position: fixed;
+    top:0;
+    background-color: rgb(6, 91, 177);
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.4) !important;
+    padding-bottom: 2px;
+}
+.input-field input[type=search] + label > i{
+    margin-left: 10px;
+}
+
+nav #nav-mobile > li > a > i, nav .col > i,nav .col > a > i,nav .col > label > i{
+    height:50px !important;
+    line-height: 50px;
+    font-size: 12pt !important;
+}
+nav #nav-mobile > li{
+    height:50px !important;
+    line-height: 50px;
+}
+
+nav a, nav input[type=search]{
+    font-size: 10pt;
+}
+
+.min-width-400px{
+    min-width: 310px;
+}
+.menu-nav{
+    width: 33.333333%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+.never-hide{
+    display: inline-block !important;
+}
+.brand-logo{
+    font-size: 1.1em;
+}
+@media only screen and (max-width: 892px){
+    .search-form{
+        width: 83.33333%;
+    }
+    .menu-nav{
+        display: none;
+        width: 0px !important;
+    }
+}
+
+.dropdown-content{
+    height: auto;
+}
+.dropdown-content li > a{
+    color: white !important;
+}
+.dropdown-content li > a > i{
+    color: white !important;
+}
+
+@media only screen and (min-width: 601px){
+    nav, nav .nav-wrapper i, nav a.sidenav-trigger, nav a.sidenav-trigger i{
+        line-height: auto;
+    }
+}
+
+.border-rad-25{
+    border-radius: 25px !important;
+    min-width: 2.2rem;
+}
